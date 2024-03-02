@@ -15,7 +15,8 @@
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 25% [col-start] 30% [col-start];
+    grid-template-columns: 20% [col-start] 30% [col-start] 30% [col-start] 10% [col-start];
+    gap: 32px;
     border-radius: 25px;
     padding: 24px;
     background: white;
@@ -27,4 +28,54 @@
     flex-direction: row;
     gap: '30px' !important;
     font-size: 32px;
+}
+
+.photos {
+    width: 40%;
+    height: 400px;
+    border-radius: 25px;
+    padding: 32px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    margin-top: 32px;
+}
+
+.review-container {
+    width: 55%;
+    height: 400px;
+    border-radius: 25px;
+    padding: 32px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    margin-top: 32px;
+
+    .review-heading {
+        display: grid;
+        grid-template-columns: 5% 75% 20%;
+
+        color: grey;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .user-review {
+        max-height: 100px;
+        border-radius: 25px;
+        padding: 32px;
+        background: white;
+        box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+        margin-top: 16px;
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .contents {
+            margin-top: 16px;
+            max-width: 50%;
+            font-size: 12px;
+            display: grid;
+            gap: 4px;
+            grid-template-columns: 20% 60%;
+        }
+    }
 }

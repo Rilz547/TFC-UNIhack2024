@@ -1,10 +1,71 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './Restaurant.scss';
 import Button from './components/Button';
+import Chart from 'react-apexcharts';
+import ResPhotos from './ResPhotos.js';
+import AddReview from './AddReview.js';
+
+var chart = {
+    series: [
+        {
+            data: [4, 3, 5],
+        },
+    ],
+    options: {
+        chart: {
+            type: 'bar',
+            toolbar: {
+                show: false,
+            },
+            height: 350,
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                horizontal: true,
+            },
+        },
+        style: {
+            colors: function ({ value }) {
+                if (value === 4) {
+                    return 'orange'; // Color value 4 as orange
+                } else if (value === 3) {
+                    return 'yellow'; // Color value 3 as yellow
+                } else if (value === 5) {
+                    return 'red'; // Color value 5 as red
+                } else {
+                    return '#008FFB'; // Default color for other values
+                }
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        xaxis: {
+            categories: ['Price', 'Quality', 'Service'],
+            max: 5,
+            min: 0,
+            tickPlacement: 'on',
+            labels: {
+                formatter: function (val) {
+                    return parseInt(val) === val ? val : '';
+                },
+            },
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                },
+            },
+        },
+    },
+};
 
 function StarRating({ rating, onRate }) {
     const handleClick = (value) => {
@@ -45,37 +106,17 @@ function Restaurant(props) {
         setUserRating(rating);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const reviewTitle = e.target.elements.title.value;
-        const reviewerName = e.target.elements.name.value;
-
-        const newReview = {
-            title: reviewTitle,
-            name: reviewerName,
-            rating: userRating,
-        };
-
-        setReviews([...reviews, newReview]);
-        setUserRating(0);
-
-        e.target.reset();
-    };
+    const handleSubmit = useMemo(
+        () => (newReview) => {
+            console.log(newReview);
+            setReviews([...reviews, newReview]);
+        },
+        [reviews]
+    );
 
     return (
         <>
             <div style={{ padding: '48px' }}>
-                <div>
-                    <h2>Reviews</h2>
-                    {reviews.map((review, index) => (
-                        <div key={index}>
-                            <h3>{review.title}</h3>
-                            <p>By: {review.name}</p>
-                            <p>Rating: {review.rating}</p>
-                            <p>{review.review}</p>
-                        </div>
-                    ))}
-                </div>
                 <div className="header">
                     <div className="icon">
                         <img
@@ -98,19 +139,98 @@ function Restaurant(props) {
                             Mexican Cuisine
                         </div>
                     </div>
+                    <div>
+                        <Chart
+                            options={chart.options}
+                            series={chart.series}
+                            type="bar"
+                            width="300px"
+                        />
+                    </div>
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    className="fa-solid fa-clock"
+                                    style={{ fontSize: '18px' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Hours
+                                </div>
+                            </div>
+                        }
+                        onClick={() => setOpen(true)}
+                        height="18px"
+                        width="80px"
+                    />
                 </div>
-                {/* <StarRating stars={3.6} /> */}
+                <div
+                    style={{
+                        display: 'inline-flex',
+                        width: '100%',
+                        gap: '32px',
+                    }}
+                >
+                    <div className="photos">
+                        <ResPhotos />
+                    </div>
+                    <div className="review-container">
+                        <div className="review-heading">
+                            <i class="fa-solid fa-clipboard"></i>Reviews
+                            <Button
+                                titleContent={
+                                    <div style={{ display: 'inline-flex' }}>
+                                        <i
+                                            className="fa-solid fa-plus"
+                                            style={{
+                                                fontSize: '18px',
+                                                color: 'black',
+                                            }}
+                                        ></i>
+                                        <div
+                                            style={{
+                                                marginLeft: '12px',
+                                                fontWeight: 'bold',
+                                                color: 'black',
+                                            }}
+                                        >
+                                            Review
+                                        </div>
+                                    </div>
+                                }
+                                onClick={() => setAddReview(true)}
+                                height="20px"
+                                colour="#F95738"
+                            />
+                        </div>
+                        <AddReview
+                            open={addReview}
+                            setAddReview={setAddReview}
+                            handleSubmit={handleSubmit}
+                        />
+
+                        {reviews?.length >= 1 &&
+                            reviews?.map((review, index) => (
+                                <div key={index} className="user-review">
+                                    <div className="title">{review?.title}</div>
+
+                                    <div className="contents">
+                                        <em>User:</em>{' '}
+                                        <span>{review.name}</span>
+                                        <em>Review:</em>{' '}
+                                        <span>{review.description}</span>
+                                    </div>
+                                </div>
+                            ))}
+                    </div>
+                </div>
             </div>
-            <Button
-                buttonText="Opening Hours"
-                onClick={() => setOpen(true)}
-                height="20px"
-            />
-            <Button
-                buttonText="Opening Hours"
-                onClick={() => setAddReview(true)}
-                height="20px"
-            />
+
             <Dialog
                 open={open}
                 onClose={() => setOpen(false)}
@@ -146,53 +266,6 @@ function Restaurant(props) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description"></DialogContentText>
-                </DialogContent>
-            </Dialog>
-            <Dialog
-                open={addReview}
-                onClose={() => setAddReview(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                PaperProps={{
-                    sx: {
-                        borderRadius: '25px',
-                    },
-                }}
-            >
-                <DialogTitle
-                    id="alert-dialog-title"
-                    style={{ fontSize: '24px', fontStyle: 'italic' }}
-                >
-                    Add a Review
-                </DialogTitle>
-                <DialogContent>
-                    <div>
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label htmlFor="name">Your Name: </label>
-                                <input type="text" id="name" name="name" />
-                            </div>
-                            <div>
-                                <label htmlFor="title">Review Title: </label>
-                                <input type="text" id="title" name="title" />
-                            </div>
-                            <div>
-                                <textarea
-                                    style={{ resize: 'none' }}
-                                    id="review"
-                                    name="review"
-                                    placeholder="Write a review!"
-                                    rows="6"
-                                    cols="50"
-                                />
-                            </div>
-                            <StarRating
-                                rating={userRating}
-                                onRate={handleRate}
-                            />
-                            <button type="submit">Submit Review</button>
-                        </form>
-                    </div>
                 </DialogContent>
             </Dialog>
         </>
