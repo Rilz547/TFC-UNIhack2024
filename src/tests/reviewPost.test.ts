@@ -2,9 +2,9 @@ import { reqReviewPost, reqClear } from './reqWrapper';
 
 const OK = 200;
 
-afterEach(() => {
-    reqClear();
-});
+// afterEach(() => {
+//     reqClear();
+// });
 
 describe('Test reviewPost', () => {    
     test('Valid post', () => {

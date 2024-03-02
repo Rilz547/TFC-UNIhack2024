@@ -12,7 +12,7 @@ import { clear } from './helpers';
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
     const dbString = fs.readFileSync('./database.json');
-    // setData(JSON.parse(String(dbString)));
+    setData(JSON.parse(String(dbString)));
 }
 
 // Save the database to file

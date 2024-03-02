@@ -1,5 +1,5 @@
 import { Review } from './interfaces';
-import { getData, setData } from './dataStore'
+import { getData, setData } from './dataStore.ts'
 
 /**
  * Given the supplied information will create a new review 
@@ -24,7 +24,7 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
 
     const data = getData();
     for (const restaurant of data.restaurants) {
-        if (restaurant.id == restaurantId) {
+        if (restaurant.id === restaurantId) {
             restaurant.reviews.push({
                 reviewTitle: reviewTitle,
                 reviewer: reviewer,
@@ -36,8 +36,10 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
                 service: service,
                 reviewText: reviewText
             });
+            console.log(restaurant)    
         }
     }
+    
 
     return {};
 }

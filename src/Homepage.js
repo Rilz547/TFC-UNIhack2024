@@ -4,6 +4,8 @@ import './Homepage.scss';
 import { restaurantsBackend } from './App.js';
 import unswLogo from './unsw-logo.png';
 
+import { getData } from './backend/dataStore.ts';
+
 const Homepage = () => (
     <div style={{ padding: '48px' }}>
         <div className="homepage-title">
@@ -38,7 +40,8 @@ const Homepage = () => (
                 <p>- The UNSW Food Dev Team</p>
             </div>
             <div className="rest-container">
-                {restaurantsBackend.map((element, index) => {
+                {getData().dashboardView.map((element, index) => {
+                    console.log(element);
                     return (
                         <Zoom
                             in={true}
@@ -53,15 +56,15 @@ const Homepage = () => (
                                 }}
                             >
                                 <Container
-                                    heading={element.heading}
-                                    content={<>{element.content} </>}
-                                    logo={element?.logo}
-                                    description={element?.description}
+                                    heading={element?.title}
+                                    content={<>{element.cuisine} </>}
+                                    logo={element?.image}
+                                    description={element?.cuisine}
                                     style={{
                                         width: '320px',
                                         height: '120px',
                                     }}
-                                    route={element?.route}
+                                    route={`/${element?.id}`}
                                 />
                             </div>
                         </Zoom>

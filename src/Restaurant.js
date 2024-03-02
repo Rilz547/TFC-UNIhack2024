@@ -11,6 +11,8 @@ import AddReview from './AddReview.js';
 import Details from './Details.js';
 import Zoom from '@mui/material/Zoom';
 import Fade from '@mui/material/Fade';
+import { getData } from './backend/dataStore.ts';
+import { reviewPost } from './backend/review.ts';
 
 var chart = {
     series: [
@@ -60,58 +62,7 @@ var chart = {
 function Restaurant(props) {
     const { restObj } = props;
     const [addReview, setAddReview] = useState(false);
-    const [reviews, setReviews] = useState([
-        {
-            title: 'Great Food',
-            name: 'Riley',
-            description: 'Excellent tacs',
-            price: 3,
-            quality: 3,
-            service: 3,
-            image: null,
-            time: '02/03/2024',
-        },
-        {
-            title: 'Great Food',
-            name: 'Riley',
-            description: 'Excellent tacs',
-            price: 3,
-            quality: 3,
-            service: 3,
-            image: null,
-            time: '02/03/2024',
-        },
-        {
-            title: 'Great Food',
-            name: 'Riley',
-            description: 'Excellent tacs',
-            price: 3,
-            quality: 3,
-            service: 3,
-            image: null,
-            time: '02/03/2024',
-        },
-        {
-            title: 'Great Food',
-            name: 'Riley',
-            description: 'Excellent tacs',
-            price: 3,
-            quality: 3,
-            service: 3,
-            image: null,
-            time: '02/03/2024',
-        },
-        {
-            title: 'Great Food',
-            name: 'Riley',
-            description: 'Excellent tacs',
-            price: 3,
-            quality: 3,
-            service: 3,
-            image: null,
-            time: '02/03/2024',
-        },
-    ]);
+    const [reviews, setReviews] = useState(getData().restaurants[0].reviews);
     const [openImage, setOpenImage] = useState(null);
 
     const handleSubmit = useMemo(
@@ -135,7 +86,7 @@ function Restaurant(props) {
                             />
                         </div>
                         <div className="heading">
-                            {restObj?.heading}
+                            {restObj?.title}
                             <div
                                 style={{
                                     fontSize: '16px',
@@ -219,6 +170,7 @@ function Restaurant(props) {
                                 padding: '24px',
                             }}
                         >
+                            {console.log(reviews?.length >= 1)}
                             {reviews?.length >= 1 &&
                                 reviews?.map((review, index) => (
                                     <Zoom
@@ -234,7 +186,7 @@ function Restaurant(props) {
                                         >
                                             <div>
                                                 <div className="title">
-                                                    {review?.title}
+                                                    {review?.reviewTitle}
                                                 </div>
 
                                                 <div className="contents">
@@ -251,7 +203,7 @@ function Restaurant(props) {
                                                 </div>
                                             </div>
 
-                                            <div>
+                                            {/* <div>
                                                 <Chart
                                                     options={{
                                                         ...chart.options,
@@ -276,7 +228,7 @@ function Restaurant(props) {
                                                     width="200px"
                                                     height="110px"
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div>
                                                 {review?.image && (
                                                     <>

@@ -4,6 +4,7 @@ import Container from './components/RoundedContainer.js';
 import Dashboard from './Dashboard.js';
 import Homepage from './Homepage.js';
 import Restaurant from './Restaurant.js';
+import { getData } from './backend/dataStore.ts';
 
 export const restaurantsBackend = [
     {
@@ -56,14 +57,20 @@ export const restaurantsBackend = [
     },
 ];
 
+console.log(getData());
+
+// getData().restaurants.map((element, index) => {
+//     return console.log(element);
+// });
+
 const App = () => (
     <Router>
         <Routes>
             <Route path="/" element={<Homepage />} />
-            {restaurantsBackend.map((element, index) => {
+            {getData().restaurants.map((element, index) => {
                 return (
                     <Route
-                        path={element.route}
+                        path={`/${element.id}`}
                         element={<Restaurant restObj={element} />}
                         key={index}
                     />

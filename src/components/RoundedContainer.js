@@ -12,12 +12,8 @@ function Component(props) {
 
     return (
         <>
-            {isDashboardRoute ? (
-                <div
-                    className="container-wrapper"
-                    style={style}
-                    // onClick={handleClickOpen}
-                >
+            <Link to={route} style={{ textDecoration: 'none' }}>
+                <div className="container-wrapper" style={style}>
                     <div>
                         {logo && <img src={logo} alt="" className="logo" />}
                     </div>
@@ -26,19 +22,7 @@ function Component(props) {
                         <div className="content">{content && content}</div>
                     </div>
                 </div>
-            ) : (
-                <Link to={route} style={{ textDecoration: 'none' }}>
-                    <div className="container-wrapper" style={style}>
-                        <div>
-                            {logo && <img src={logo} alt="" className="logo" />}
-                        </div>
-                        <div>
-                            <div className="heading">{heading && heading}</div>
-                            <div className="content">{content && content}</div>
-                        </div>
-                    </div>
-                </Link>
-            )}
+            </Link>
         </>
     );
 }
