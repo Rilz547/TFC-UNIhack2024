@@ -32,11 +32,7 @@ const App = () => (
                 return (
                     <Route
                         path={element.route}
-                        element={
-                            <Restaurant
-                                heading={element.heading}
-                            />
-                        }
+                        element={<Restaurant restObj={element} />}
                     />
                 );
             })}

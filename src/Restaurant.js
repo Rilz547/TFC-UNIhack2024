@@ -27,7 +27,7 @@ function StarRating({ rating, onRate }) {
 }
 
 function Restaurant(props) {
-    const { heading } = props;
+    const { restObj } = props;
     const [userRating, setUserRating] = useState(0);
     const [reviews, setReviews] = useState([]);
 
@@ -55,7 +55,7 @@ function Restaurant(props) {
     return (
         <>
             <div>
-                <h1>{heading}</h1>
+                <h1>{restObj.heading}</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="name">Your Name: </label>
