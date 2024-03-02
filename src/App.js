@@ -1,10 +1,10 @@
-import Chart from 'react-apexcharts';
-import Container from './components/RoundedContainer.js';
-import Zoom from '@mui/material/Zoom';
+// import Chart from 'react-apexcharts';
+// import Container from './components/RoundedContainer.js';
+// import Zoom from '@mui/material/Zoom';
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Dashboard from './Dashboard';
+import Container from './components/RoundedContainer.js';
 
 const restarunts = [
     {
@@ -37,10 +37,10 @@ function App() {
         <>
             <Router>
                 <button type="button">
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/container">Dashboard</Link>
                 </button>
                 <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/container" element={<Container />} />
                 </Routes>
             </Router>
         </>
