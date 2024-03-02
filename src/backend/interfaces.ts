@@ -19,7 +19,9 @@ export interface Data {
 }
 
 export interface Restaurant {
-    name: string;
+    id: number,
+    title: string;
+    logo: string,
     cuisine: string;
     location: string;
     operatingHours: string[];

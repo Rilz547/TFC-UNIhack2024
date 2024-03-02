@@ -1,4 +1,5 @@
-import { Review } from "./interfaces";
+import { Review } from './interfaces';
+import { getData, setData } from './dataStore'
 
 /**
  * Given the supplied information will create a new review 
@@ -15,22 +16,29 @@ import { Review } from "./interfaces";
  * @param {string} reviewText   - the review in plaintext that the user submits
  * @param {number} restaurantId - the restaurant the review belongs to
  * 
- * @returns {{ reviewId: number }} - on successful post
+ * @returns {{}} - empty object on successful review
  * @throws {HTTPError} - on invalid parameter
 **/
 export function reviewPost(reviewTitle: string, reviewer: string, rating: number,
-    quality: number, price: number, service: number, reviewText: string): number {
-    const newReview: Review = {
-        reviewTitle: reviewTitle,
-        reviewer: reviewer,
-        date: new Date(),
-        rating: rating,
-        likes: 0,
-        quality: quality,
-        price: price,
-        service: service,
-        reviewText: reviewText
+    quality: number, price: number, service: number, reviewText: string, restaurantId: number) {
+
+    const data = getData();
+
+    for (const restaurant of data.restaurants) {
+        if (restaurant.id == restaurantId) {
+            restaurant.reviews.push({
+                reviewTitle: reviewTitle,
+                reviewer: reviewer,
+                date: new Date(),
+                rating: rating,
+                likes: 0,
+                quality: quality,
+                price: price,
+                service: service,
+                reviewText: reviewText
+            });
+        }
     }
 
-    return 0;
+    return {};
 }
