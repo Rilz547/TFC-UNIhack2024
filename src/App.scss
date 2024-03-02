@@ -1,0 +1,11 @@
+.App {
+    background-color: white;
+}
+
+.rest-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-left: 32px;
+}
