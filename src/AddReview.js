@@ -1,31 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 import Button from './components/Button';
+import IconButton from '@mui/material/IconButton';
+import { format } from 'date-fns';
 
 const AddReview = (props) => {
     const { handleSubmit, setAddReview, open } = props;
+    const fileInputRef = useRef(null);
 
     const [review, setReview] = useState({
-        title: '',
-        name: '',
-        description: '',
+        title: null,
+        name: null,
+        description: null,
+        time: '',
         price: 3,
         quality: 3,
         service: 3,
+        image: null, // Add image state
     });
+
+    const [disabled, setDisabled] = useState(true);
+
+    useEffect(() => {
+        setDisabled(
+            review?.title === null ||
+                review?.name === null ||
+                review?.description === null
+        );
+    }, [review]);
+
+    useEffect(() => {
+        if (!open) {
+            // Reset review state when the dialog is closed
+            setReview({
+                title: null,
+                name: null,
+                description: null,
+                price: 3,
+                quality: 3,
+                service: 3,
+                image: null, // Reset image state
+                time: format(new Date(), 'dd/MM/yyyy'),
+            });
+        }
+    }, [open]);
 
     const handleSliderChange = (field, value) => {
         setReview({ ...review, [field]: value });
     };
 
     const handleReviewSubmission = (value) => {
+        console.log(review);
         setAddReview(false);
         handleSubmit(value);
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setReview({ ...review, image: reader.result });
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
@@ -40,7 +84,10 @@ const AddReview = (props) => {
                 },
             }}
         >
-            <DialogTitle id="alert-dialog-title" style={{ fontSize: '24px' }}>
+            <DialogTitle
+                id="alert-dialog-title"
+                style={{ fontSize: '24px', fontWeight: 'bold' }}
+            >
                 Add a Review
             </DialogTitle>
             <DialogContent>
@@ -93,6 +140,15 @@ const AddReview = (props) => {
                         })
                     }
                 />
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                />
+
                 <div
                     style={{
                         display: 'grid',
@@ -138,32 +194,42 @@ const AddReview = (props) => {
                         valueLabelDisplay="auto"
                     />
                 </div>
-                {/* <button type="submit" onClick={() => handleSubmit(review)}>
-                    Submit Review
-                </button> */}
-                <Button
-                    titleContent={
-                        <div style={{ display: 'inline-flex' }}>
-                            <i
-                                className="fa-solid fa-floppy-disk"
-                                style={{ fontSize: '18px', color: 'white' }}
-                            ></i>
-                            <div
-                                style={{
-                                    marginLeft: '12px',
-                                    fontWeight: 'bold',
-                                    color: 'white',
-                                }}
-                            >
-                                Save
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: '16px',
+                    }}
+                >
+                    <IconButton onClick={() => fileInputRef.current.click()}>
+                        <i class="fa-solid fa-camera"></i>
+                    </IconButton>
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    className="fa-solid fa-floppy-disk"
+                                    style={{ fontSize: '18px', color: 'white' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                        color: 'white',
+                                    }}
+                                >
+                                    Save
+                                </div>
                             </div>
-                        </div>
-                    }
-                    onClick={(e) => handleReviewSubmission(e)}
-                    height="18px"
-                    width="80px"
-                    colour="#4cbb17"
-                />
+                        }
+                        onClick={() => handleReviewSubmission(review)}
+                        height="18px"
+                        width="80px"
+                        colour="#4cbb17"
+                        disabled={disabled}
+                    />
+                </div>
             </DialogContent>
         </Dialog>
     );
