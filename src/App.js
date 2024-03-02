@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Container from './components/RoundedContainer.js';
 import Dashboard from './Dashboard.js';
 
-const restarunts = [
+const restaurants = [
     {
         heading: 'Guzman Y Gomez',
         content: 'Gods Palace',
