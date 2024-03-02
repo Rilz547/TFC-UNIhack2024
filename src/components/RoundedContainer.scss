@@ -1,0 +1,34 @@
+.container-wrapper {
+    border-radius: 25px;
+    padding: 24px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+    .heading {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .logo {
+        width: 100px;
+        height: 100px;
+        margin-top: 8px;
+    }
+
+    .content {
+        margin-top: 16px;
+        font-size: 12px;
+        font-weight: lighter;
+        font-style: italic;
+    }
+
+    transition: all 0.15s ease-in-out;
+    &:hover {
+        cursor: pointer;
+        scale: 1.01;
+        transition: 0.15s ease-in-out;
+        background-color: #f0f1f2;
+    }
+}
