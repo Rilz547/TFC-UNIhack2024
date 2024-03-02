@@ -1,7 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap");
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 20% [col-start] 30% [col-start] 30% [col-start] 10% [col-start];
+    border-radius: 25px;
+    padding: 24px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    height: 204px;
+
+    background-image: url(./food-background.jpg);
+    background-repeat: repeat;
+    background-size: 1000px auto;
+}
+
+h1 {
+    margin: 0;
+}
+
+#title-text {
+    font-size: 48px;
+    font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+#unsw-logo {
+    height: 200px;
+    width: auto;
+}
+
+.description {
+    width: 40%;
+    height: auto;
+    border-radius: 25px;
+    padding: 32px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    margin-top: 32px;
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+}
+
 .rest-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 32px;
-    margin-left: 32px;
+    width: 55%;
+    height: auto;
+    border-radius: 25px;
+    padding: 32px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    margin-top: 32px;
 }
