@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
 
 .homepage-title {
     display: flex;
@@ -40,7 +40,7 @@
 h1 {
     margin: 0;
     font-size: 48px;
-    font-family: "Varela Round", sans-serif;
+    font-family: 'Varela Round', sans-serif;
     font-weight: bold;
     font-style: normal;
     z-index: 1;
@@ -61,7 +61,7 @@ h1 {
     background: white;
     box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
     margin-top: 32px;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;

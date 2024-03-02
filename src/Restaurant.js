@@ -10,6 +10,7 @@ import ResPhotos from './ResPhotos.js';
 import AddReview from './AddReview.js';
 import Details from './Details.js';
 import Zoom from '@mui/material/Zoom';
+import Fade from '@mui/material/Fade';
 
 var chart = {
     series: [
@@ -124,37 +125,40 @@ function Restaurant(props) {
     return (
         <>
             <div style={{ padding: '48px' }}>
-                <div className="header">
-                    <div className="icon">
-                        <img
-                            src={restObj?.logo && restObj?.logo}
-                            width="200px"
-                            alt=""
-                        />
-                    </div>
-                    <div className="heading">
-                        {restObj?.heading}
-                        <div
-                            style={{
-                                fontSize: '16px',
-                                fontWeight: 'lighter',
-                                fontStyle: 'italic',
-                                color: 'grey',
-                                marginTop: '12px',
-                            }}
-                        >
-                            Mexican Cuisine
+                <Fade in={true}>
+                    <div className="header">
+                        <div className="icon">
+                            <img
+                                src={restObj?.logo && restObj?.logo}
+                                width="200px"
+                                alt=""
+                            />
+                        </div>
+                        <div className="heading">
+                            {restObj?.heading}
+                            <div
+                                style={{
+                                    fontSize: '16px',
+                                    fontWeight: 'lighter',
+                                    fontStyle: 'italic',
+                                    color: 'grey',
+                                    marginTop: '12px',
+                                }}
+                            >
+                                Mexican Cuisine
+                            </div>
+                        </div>
+                        <div>
+                            <Chart
+                                options={chart.options}
+                                series={chart.series}
+                                type="bar"
+                                width="300px"
+                            />
                         </div>
                     </div>
-                    <div>
-                        <Chart
-                            options={chart.options}
-                            series={chart.series}
-                            type="bar"
-                            width="300px"
-                        />
-                    </div>
-                </div>
+                </Fade>
+
                 <div
                     style={{
                         display: 'inline-flex',
@@ -162,12 +166,15 @@ function Restaurant(props) {
                         gap: '32px',
                     }}
                 >
-                    <div style={{ width: '40%' }}>
-                        <Details content={restObj} />
-                        <div className="photos">
-                            <ResPhotos />
+                    <Fade in={true}>
+                        <div style={{ width: '40%' }}>
+                            <Details content={restObj} />
+                            <div className="photos">
+                                <ResPhotos />
+                            </div>
                         </div>
-                    </div>
+                    </Fade>
+
                     <div className="review-container">
                         <div className="review-heading">
                             <i class="fa-solid fa-clipboard"></i>Reviews
