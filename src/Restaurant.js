@@ -332,6 +332,14 @@ function Restaurant(props) {
                                                         </Dialog>
                                                     </>
                                                 )}
+                                                {!review?.image && (
+                                                    <div
+                                                        style={{
+                                                            width: '100px',
+                                                            height: '100px',
+                                                        }}
+                                                    ></div>
+                                                )}
                                             </div>
                                         </div>
                                     </Zoom>
