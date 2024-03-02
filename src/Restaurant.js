@@ -1,303 +1,355 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './Restaurant.scss';
 import Button from './components/Button';
+import Chart from 'react-apexcharts';
+import ResPhotos from './ResPhotos.js';
+import AddReview from './AddReview.js';
+import Details from './Details.js';
+import Zoom from '@mui/material/Zoom';
+import Fade from '@mui/material/Fade';
 
-function StarRating({ rating, onRate }) {
-    const handleClick = (value) => {
-        onRate(value);
-    };
-
-    return (
-        <div>
-            {[1, 2, 3, 4, 5].map((value) => (
-                <span
-                    key={value}
-                    onClick={() => handleClick(value)}
-                    style={{
-                        cursor: 'pointer',
-                        color: value <= rating ? 'gold' : 'gray',
-                        fontSize: '24px',
-                        marginRight: '4px',
-                    }}
-                >
-                    &#9733;
-                </span>
-            ))}
-            <p>You rated this {rating} out of 5 stars</p>
-        </div>
-    );
-}
+var chart = {
+    series: [
+        {
+            data: [4, 3, 5],
+        },
+    ],
+    options: {
+        chart: {
+            type: 'bar',
+            toolbar: {
+                show: false,
+            },
+            height: 350,
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                horizontal: true,
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        xaxis: {
+            categories: ['Price', 'Quality', 'Service'],
+            max: 5,
+            min: 0,
+            tickPlacement: 'on',
+            labels: {
+                formatter: function (val) {
+                    return parseInt(val) === val ? val : '';
+                },
+            },
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                },
+            },
+        },
+    },
+};
 
 function Restaurant(props) {
     const { restObj } = props;
-    const [userRating, setUserRating] = useState(0);
-    const [reviews, setReviews] = useState([]);
+    const [addReview, setAddReview] = useState(false);
+    const [reviews, setReviews] = useState([
+        {
+            title: 'Great Food',
+            name: 'Riley',
+            description: 'Excellent tacs',
+            price: 3,
+            quality: 3,
+            service: 3,
+            image: null,
+            time: '02/03/2024',
+        },
+        {
+            title: 'Great Food',
+            name: 'Riley',
+            description: 'Excellent tacs',
+            price: 3,
+            quality: 3,
+            service: 3,
+            image: null,
+            time: '02/03/2024',
+        },
+        {
+            title: 'Great Food',
+            name: 'Riley',
+            description: 'Excellent tacs',
+            price: 3,
+            quality: 3,
+            service: 3,
+            image: null,
+            time: '02/03/2024',
+        },
+        {
+            title: 'Great Food',
+            name: 'Riley',
+            description: 'Excellent tacs',
+            price: 3,
+            quality: 3,
+            service: 3,
+            image: null,
+            time: '02/03/2024',
+        },
+        {
+            title: 'Great Food',
+            name: 'Riley',
+            description: 'Excellent tacs',
+            price: 3,
+            quality: 3,
+            service: 3,
+            image: null,
+            time: '02/03/2024',
+        },
+    ]);
+    const [openImage, setOpenImage] = useState(null);
 
-    const [open, setOpen] = useState(false);
-
-    const handleRate = (rating) => {
-        setUserRating(rating);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const reviewTitle = e.target.elements.title.value;
-        const reviewerName = e.target.elements.name.value;
-
-        const newReview = {
-            title: reviewTitle,
-            name: reviewerName,
-            rating: userRating,
-        };
-
-        setReviews([...reviews, newReview]);
-        setUserRating(0);
-
-        e.target.reset();
-    };
+    const handleSubmit = useMemo(
+        () => (newReview) => {
+            console.log(newReview);
+            setReviews([...reviews, newReview]);
+        },
+        [reviews]
+    );
 
     return (
         <>
             <div style={{ padding: '48px' }}>
-                <div>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="name">Your Name: </label>
-                            <input type="text" id="name" name="name" />
-                        </div>
-                        <div>
-                            <label htmlFor="title">Review Title: </label>
-                            <input type="text" id="title" name="title" />
-                        </div>
-                        <div>
-                            <textarea
-                                style={{ resize: 'none' }}
-                                id="review"
-                                name="review"
-                                placeholder="Write a review!"
-                                rows="6"
-                                cols="50"
+                <Fade in={true}>
+                    <div className="header">
+                        <div className="icon">
+                            <img
+                                src={restObj?.logo && restObj?.logo}
+                                width="200px"
+                                alt=""
                             />
                         </div>
-                        <StarRating rating={userRating} onRate={handleRate} />
-                        <button type="submit">Submit Review</button>
-                    </form>
-                </div>
-                <div>
-                    <h2>Reviews</h2>
-                    {reviews.map((review, index) => (
-                        <div key={index}>
-                            <h3>{review.title}</h3>
-                            <p>By: {review.name}</p>
-                            <p>Rating: {review.rating}</p>
-                            <p>{review.review}</p>
+                        <div className="heading">
+                            {restObj?.heading}
+                            <div
+                                style={{
+                                    fontSize: '16px',
+                                    fontWeight: 'lighter',
+                                    fontStyle: 'italic',
+                                    color: 'grey',
+                                    marginTop: '12px',
+                                }}
+                            >
+                                Mexican Cuisine
+                            </div>
                         </div>
-                    ))}
-                </div>
-                <div className="header">
-                    <div className="icon">
-                        <img
-                            src={restObj?.logo && restObj?.logo}
-                            width="200px"
-                            alt=""
-                        />
+                        <div>
+                            <Chart
+                                options={chart.options}
+                                series={chart.series}
+                                type="bar"
+                                width="300px"
+                            />
+                        </div>
                     </div>
-                    <div className="heading">
-                        {restObj?.heading}
+                </Fade>
+
+                <div
+                    style={{
+                        display: 'inline-flex',
+                        width: '100%',
+                        gap: '32px',
+                    }}
+                >
+                    <Fade in={true}>
+                        <div style={{ width: '40%' }}>
+                            <Details content={restObj} />
+                            <div className="photos">
+                                <ResPhotos />
+                            </div>
+                        </div>
+                    </Fade>
+
+                    <div className="review-container">
+                        <div className="review-heading">
+                            <i class="fa-solid fa-clipboard"></i>Reviews
+                            <Button
+                                titleContent={
+                                    <div style={{ display: 'inline-flex' }}>
+                                        <i
+                                            className="fa-solid fa-plus"
+                                            style={{
+                                                fontSize: '18px',
+                                                color: 'black',
+                                            }}
+                                        ></i>
+                                        <div
+                                            style={{
+                                                marginLeft: '12px',
+                                                fontWeight: 'bold',
+                                                color: 'black',
+                                            }}
+                                        >
+                                            Review
+                                        </div>
+                                    </div>
+                                }
+                                onClick={() => setAddReview(true)}
+                                height="20px"
+                                colour="salmon"
+                            />
+                        </div>
+                        <AddReview
+                            open={addReview}
+                            setAddReview={setAddReview}
+                            handleSubmit={handleSubmit}
+                        />
+
                         <div
                             style={{
-                                fontSize: '16px',
-                                fontWeight: 'lighter',
-                                fontStyle: 'italic',
-                                color: 'grey',
-                                marginTop: '12px',
+                                marginTop: '16px',
+                                overflow: 'auto',
+                                maxHeight: '680px',
+
+                                padding: '24px',
                             }}
                         >
-                            Mexican Cuisine
+                            {reviews?.length >= 1 &&
+                                reviews?.map((review, index) => (
+                                    <Zoom
+                                        in={true}
+                                        style={{
+                                            transitionDelay: `${100 * index}ms`,
+                                        }}
+                                    >
+                                        <div
+                                            key={index}
+                                            className="user-review"
+                                        >
+                                            <div>
+                                                <div className="title">
+                                                    {review?.title}
+                                                </div>
+
+                                                <div className="contents">
+                                                    <em>User:</em>{' '}
+                                                    <span>{review.name}</span>
+                                                    <em>
+                                                        Date of Review:
+                                                    </em>{' '}
+                                                    <span>{review.time}</span>
+                                                    <em>Review:</em>{' '}
+                                                    <span>
+                                                        {review.description}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <Chart
+                                                    options={{
+                                                        ...chart.options,
+                                                        xaxis: {
+                                                            ...chart.options
+                                                                .xaxis,
+                                                            labels: {
+                                                                show: false, // Hide x-axis labels
+                                                            },
+                                                        },
+                                                    }}
+                                                    series={[
+                                                        {
+                                                            data: [
+                                                                review?.price,
+                                                                review?.quality,
+                                                                review?.service,
+                                                            ],
+                                                        },
+                                                    ]}
+                                                    type="bar"
+                                                    width="200px"
+                                                    height="110px"
+                                                />
+                                            </div>
+                                            <div>
+                                                {review?.image && (
+                                                    <>
+                                                        <img
+                                                            className="image"
+                                                            src={review.image}
+                                                            alt="Uploaded review"
+                                                            style={{
+                                                                width: '100px',
+                                                                height: '100px',
+                                                                marginBottom:
+                                                                    '16px',
+                                                            }}
+                                                            onClick={() =>
+                                                                setOpenImage(
+                                                                    index
+                                                                )
+                                                            }
+                                                        />
+                                                        <Dialog
+                                                            open={
+                                                                openImage ===
+                                                                index
+                                                            }
+                                                            onClose={() =>
+                                                                setOpenImage(
+                                                                    null
+                                                                )
+                                                            }
+                                                            aria-labelledby="alert-dialog-title"
+                                                            aria-describedby="alert-dialog-description"
+                                                            PaperProps={{
+                                                                sx: {
+                                                                    borderRadius:
+                                                                        '25px',
+                                                                },
+                                                            }}
+                                                        >
+                                                            <DialogContent>
+                                                                <img
+                                                                    className="image"
+                                                                    src={
+                                                                        review.image
+                                                                    }
+                                                                    alt="Uploaded review"
+                                                                    style={{
+                                                                        height: 'auto',
+                                                                        width: '100%',
+                                                                        display:
+                                                                            'block',
+                                                                    }}
+                                                                />
+                                                            </DialogContent>
+                                                        </Dialog>
+                                                    </>
+                                                )}
+                                                {!review?.image && (
+                                                    <div
+                                                        style={{
+                                                            width: '100px',
+                                                            height: '100px',
+                                                        }}
+                                                    ></div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </Zoom>
+                                ))}
                         </div>
                     </div>
                 </div>
-                {/* <StarRating stars={3.6} /> */}
             </div>
-            <Button
-                buttonText="Opening Hours"
-                onClick={() => setOpen(true)}
-                height="20px"
-            />
-            <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                PaperProps={{
-                    sx: {
-                        borderRadius: '25px',
-                    },
-                }}
-            >
-                <DialogTitle
-                    id="alert-dialog-title"
-                    style={{ fontSize: '24px', fontStyle: 'italic' }}
-                >
-                    Operating Hours
-                    <div className="opening-hours">
-                        <div>Monday</div>
-                        <div>10am - 5pm</div>
-                        <div>Tuesday</div>
-                        <div>10am - 5pm</div>
-                        <div>Wednesday</div>
-                        <div>10am - 5pm</div>
-                        <div>Thursday</div>
-                        <div>10am - 5pm</div>
-                        <div>Friday</div>
-                        <div>10am - 5pm</div>
-                        <div>Saturday</div>
-                        <div>10am - 5pm</div>
-                        <div>Sunday</div>
-                        <div>10am - 5pm</div>
-                    </div>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description"></DialogContentText>
-                </DialogContent>
-            </Dialog>
         </>
     );
 }
 
 export default Restaurant;
-
-// import Chart from 'react-apexcharts';
-
-// function Restaurant(props) {
-//     const { restObj } = props;
-//     const [open, setOpen] = useState(false);
-
-//     const handleClose = () => {
-//         setOpen(false);
-//     };
-
-//     console.log(restObj);
-
-//     return (
-//         <>
-//             <div style={{ padding: '48px' }}>
-//                 <div className="header">
-//                     <div className="icon">
-//                         <img
-//                             src={restObj?.logo && restObj?.logo}
-//                             width="200px"
-//                             alt=""
-//                         />
-//                     </div>
-//                     <div className="heading">
-//                         {restObj?.heading}
-//                         <div
-//                             style={{
-//                                 fontSize: '16px',
-//                                 fontWeight: 'lighter',
-//                                 fontStyle: 'italic',
-//                                 color: 'grey',
-//                                 marginTop: '12px',
-//                             }}
-//                         >
-//                             Mexican Cuisine
-//                         </div>
-//                     </div>
-//                 </div>
-//                 {/* <StarRating stars={3.6} /> */}
-//             </div>
-//             <Button
-//                 buttonText="Opening Hours"
-//                 onClick={() => setOpen(true)}
-//                 height="20px"
-//             />
-//             <Dialog
-//                 open={open}
-//                 onClose={handleClose}
-//                 aria-labelledby="alert-dialog-title"
-//                 aria-describedby="alert-dialog-description"
-//                 PaperProps={{
-//                     sx: {
-//                         borderRadius: '25px',
-//                     },
-//                 }}
-//             >
-//                 <DialogTitle
-//                     id="alert-dialog-title"
-//                     style={{ fontSize: '24px', fontStyle: 'italic' }}
-//                 >
-//                     Operating Hours
-//                     <div className="opening-hours">
-//                         <div>Monday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Tuesday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Wednesday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Thursday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Friday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Saturday</div>
-//                         <div>10am - 5pm</div>
-//                         <div>Sunday</div>
-//                         <div>10am - 5pm</div>
-//                     </div>
-//                 </DialogTitle>
-//                 <DialogContent>
-//                     <DialogContentText id="alert-dialog-description"></DialogContentText>
-//                 </DialogContent>
-//             </Dialog>
-//         </>
-//     );
-// }
-
-// export default Restaurant;
-
-// const StarRating = ({ stars }) => {
-//     const totalStars = 5;
-//     const fullStars = Math.floor(stars);
-//     const decimalPart = stars - fullStars;
-//     const lastStarPercentage = decimalPart * 100;
-
-//     const starElements = [];
-
-//     for (let i = 1; i <= totalStars; i++) {
-//         if (i <= fullStars) {
-//             // Render a full yellow star
-//             starElements.push(
-//                 <div key={i}>
-//                     <i
-//                         className="fa-solid fa-star"
-//                         style={{ color: 'yellow' }}
-//                     />
-//                 </div>
-//             );
-//         } else if (i === fullStars + 1) {
-//             // Render a partially filled star with gradient color
-//             const gradientStyle = `linear-gradient(90deg, yellow ${lastStarPercentage}%, transparent ${lastStarPercentage}%)`;
-//             starElements.push(
-//                 <div key={i}>
-//                     <i
-//                         className="fa-solid fa-star"
-//                         style={{ backgroundImage: gradientStyle }}
-//                     />
-//                 </div>
-//             );
-//         } else {
-//             // Render an empty star
-//             starElements.push(
-//                 <div key={i}>
-//                     <i className="fa-solid fa-star" />
-//                 </div>
-//             );
-//         }
-//     }
-
-//     return <div className="star-rating">{starElements}</div>;
-// };
