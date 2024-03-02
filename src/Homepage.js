@@ -43,6 +43,7 @@ const Homepage = () => (
                         <Zoom
                             in={true}
                             style={{ transitionDelay: `${100 * index}ms` }}
+                            key={index}
                         >
                             <div
                                 style={{

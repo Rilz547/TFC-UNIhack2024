@@ -177,7 +177,7 @@ function Restaurant(props) {
 
                     <div className="review-container">
                         <div className="review-heading">
-                            <i class="fa-solid fa-clipboard"></i>Reviews
+                            <i className="fa-solid fa-clipboard"></i>Reviews
                             <Button
                                 titleContent={
                                     <div style={{ display: 'inline-flex' }}>
@@ -226,6 +226,7 @@ function Restaurant(props) {
                                         style={{
                                             transitionDelay: `${100 * index}ms`,
                                         }}
+                                        key={index}
                                     >
                                         <div
                                             key={index}
