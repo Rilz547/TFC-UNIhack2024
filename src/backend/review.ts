@@ -23,7 +23,6 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
     quality: number, price: number, service: number, reviewText: string, restaurantId: number) {
 
     const data = getData();
-
     for (const restaurant of data.restaurants) {
         if (restaurant.id == restaurantId) {
             restaurant.reviews.push({

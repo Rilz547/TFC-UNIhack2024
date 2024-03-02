@@ -1,5 +1,4 @@
 import express, { json, Request, Response } from 'express';
-import { echo } from './echo';
 import errorHandler from 'middleware-http-errors';
 import morgan from 'morgan';
 import config from './config.json';
@@ -7,18 +6,32 @@ import cors from 'cors';
 import fs from 'fs';
 import { getData, setData } from './dataStore';
 import { reviewPost } from './review';
+import multer from 'multer';
+import { clear } from './helpers';
 
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
     const dbString = fs.readFileSync('./database.json');
-    setData(JSON.parse(String(dbString)));
+    // setData(JSON.parse(String(dbString)));
 }
-  
+
 // Save the database to file
 const save = () => {
     const jsonString = JSON.stringify(getData());
     fs.writeFileSync('./database.json', jsonString);
 };
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/') // Save uploaded files to the 'uploads' directory
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname) // Use original filename for the uploaded file
+    }
+})
+
+// Create a multer instance with the configured storage
+const upload = multer({ storage: storage });
   
 // Set up web app
 const app = express();
@@ -32,15 +45,16 @@ app.use('/imgurl', express.static('imgurl'));
 const PORT: number = parseInt(process.env.PORT || config.port);
 const HOST: string = process.env.IP || 'localhost';
 
-// Example get request
-app.get('/echo', (req: Request, res: Response, next) => {
-    const data = req.query.echo as string;
-    return res.json(echo(data));
-});
-
+// Post review requests
 app.post('/reviewPost', (req: Request, res: Response) => {
     const { reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId } = req.body;
     res.json(reviewPost(reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId));
+    save();
+});
+
+// Clear requests
+app.delete('/clear', (req: Request, res: Response) => {
+    res.json(clear());
     save();
 });
 

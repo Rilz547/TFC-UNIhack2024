@@ -2,6 +2,7 @@ import { Restaurant } from './interfaces';
 import HTTPError from 'http-errors';
 import { BAD_REQUEST } from './httpsConsts';
 import { getNextRestaurantId } from './helpers';
+import { getData } from './dataStore';
 
 /**
  * Creates a restaurant
@@ -20,6 +21,8 @@ export function createRestaurant(title: string, logo: string, cuisine: string, l
         throw HTTPError(BAD_REQUEST, 'phone number must be 10 characters long');
     }
 
+    const data = getData();
+
     const newRestaurant: Restaurant = {
         id: getNextRestaurantId(),
         title: title,
@@ -33,6 +36,8 @@ export function createRestaurant(title: string, logo: string, cuisine: string, l
         reviews: []
     }
 
+    // Add new restaurant to dataStore
+    data.restaurants.push(newRestaurant);
+
 }
 
-// export function 
