@@ -15,7 +15,15 @@ let data: Data = {
             reviews: []
         }
     ],
-    dashboardView: [],
+    dashboardView: [
+        {
+            id: 0,
+            title: 'Guzman Y Gomez',
+            image: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Guzman_y_Gomez_logo.svg/1200px-Guzman_y_Gomez_logo.svg.png',
+            cuisine: 'Mexican',
+            location: 'University Terraces Lower Kensington Campus, High St, Kensington NSW 2052',
+        }
+    ],
 };
 
 // Use getData() to access the data

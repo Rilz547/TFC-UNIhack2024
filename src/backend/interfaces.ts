@@ -1,7 +1,7 @@
-export interface DashboardReview {
-    average_stars: number;
-    num_reviews: number;
-}
+// export interface DashboardReview {
+//     average_stars: number;
+//     num_reviews: number;
+// }
 
 // This is for the card view in the dashboard
 export interface DashboardView {
@@ -10,7 +10,7 @@ export interface DashboardView {
     image: string // placeholder for local image
     cuisine: string
     location: string
-    reviews: DashboardReview
+    // reviews: DashboardReview
 }
 
 export interface Data {
