@@ -1,0 +1,30 @@
+.heading {
+    font-size: 48px;
+    font-weight: bold;
+    text-wrap: wrap;
+}
+
+.opening-hours {
+    margin-top: 42px;
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: 45% 60%;
+    gap: 16px;
+}
+
+.header {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 25% [col-start] 30% [col-start];
+    border-radius: 25px;
+    padding: 24px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    gap: '30px' !important;
+    font-size: 32px;
+}
