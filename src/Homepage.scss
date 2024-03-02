@@ -5,32 +5,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 20% [col-start] 30% [col-start] 30% [col-start] 10% [col-start];
     border-radius: 25px;
     padding: 24px;
     background: white;
     box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
     height: 204px;
+    position: relative;
+}
 
-    background-image: url(./food-background.jpg);
+.title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(./food-background1.jpg);
     background-repeat: repeat;
     background-size: 1000px auto;
+    opacity: 0.7;
+    border-radius: 25px;
+    animation: animateBackground 30s linear infinite; /* Adjust the duration and timing function as needed */
+}
+
+@keyframes animateBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 1000px; /* Adjust the distance the background image moves */
+    }
 }
 
 h1 {
     margin: 0;
-}
-
-#title-text {
     font-size: 48px;
     font-family: "Varela Round", sans-serif;
     font-weight: bold;
     font-style: normal;
+    z-index: 1;
 }
 
 #unsw-logo {
     height: 200px;
     width: auto;
+    position: relative;
+    z-index: 1;
 }
 
 .description {
