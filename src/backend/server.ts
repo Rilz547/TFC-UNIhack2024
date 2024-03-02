@@ -8,6 +8,7 @@ import fs from 'fs';
 import { getData, setData } from './dataStore';
 import { reviewPost } from './review';
 import multer from 'multer';
+import { clear } from './helpers';
 
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
@@ -51,9 +52,16 @@ app.get('/echo', (req: Request, res: Response, next) => {
     return res.json(echo(data));
 });
 
+// Post review requests
 app.post('/reviewPost', (req: Request, res: Response) => {
     const { reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId } = req.body;
     res.json(reviewPost(reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId));
+    save();
+});
+
+// Clear requests
+app.delete('/clear', (req: Request, res: Response) => {
+    res.json(clear());
     save();
 });
 

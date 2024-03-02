@@ -1,13 +1,16 @@
-import { reviewPost } from '../backend/review'
-import { reqReviewPost } from './reqWrapper';
+import { reqReviewPost, reqClear } from './reqWrapper';
 import request from 'sync-request';
 import config from '../backend/config.json';
 
 const OK = 200;
-const INPUT_ERROR = 400;
-const port = config.port;
-const url = config.url;
 
+// beforeEach(() => {
+//     reqClear();
+// });
+
+// afterEach(() => {
+//     reqClear();
+// });
 
 describe('Test reviewPost', () => {
     // test('Test successful echo', () => {
@@ -27,8 +30,6 @@ describe('Test reviewPost', () => {
     //     expect(bodyObj).toEqual('Hello');
     // });
     
-  
-
     test('Valid post', () => {
         const res = reqReviewPost(
             'Some Title',
