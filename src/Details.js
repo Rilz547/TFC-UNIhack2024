@@ -25,6 +25,29 @@ const Details = (props) => {
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
                                 <i
+                                    className="fa-solid fa-backward"
+                                    style={{ fontSize: '18px' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Back
+                                </div>
+                            </div>
+                        }
+                        onClick={() => window.history.back()}
+                        height="18px"
+                        width="80px"
+                        colour=""
+                    />
+
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
                                     className="fa-solid fa-clock"
                                     style={{ fontSize: '18px' }}
                                 ></i>
@@ -82,7 +105,7 @@ const Details = (props) => {
                                         fontWeight: 'bold',
                                     }}
                                 >
-                                    Website
+                                    Menu
                                 </div>
                             </div>
                         }
