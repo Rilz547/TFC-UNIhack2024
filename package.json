@@ -18,10 +18,12 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.2",
     "react-scripts": "5.0.1",
+    "sync-request": "^6.1.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-b": "ts-node -T src/backend/server.ts",
+    "start-f": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -45,6 +47,12 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.71.1"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.13",
+    "@types/http-errors": "^2.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^18.15.11",
+    "sass": "^1.71.1",
+    "typescript": "^4.0.0"
   }
 }
