@@ -7,6 +7,8 @@ function Button(props) {
         width = '100px',
         height = '40px',
         colour = '#FAF0CA',
+        titleContent,
+        disabled,
     } = props;
 
     return (
@@ -18,9 +20,11 @@ function Button(props) {
                     width: width,
                     height: height,
                     background: colour,
+                    titleContent,
                 }}
             >
-                <div style={{}}>{buttonText && buttonText}</div>
+                <div>{titleContent && titleContent}</div>
+                <div>{buttonText && buttonText}</div>
             </div>
         </>
     );
