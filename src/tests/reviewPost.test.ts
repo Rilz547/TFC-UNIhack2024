@@ -1,35 +1,12 @@
 import { reqReviewPost, reqClear } from './reqWrapper';
-import request from 'sync-request';
-import config from '../backend/config.json';
 
 const OK = 200;
 
-// beforeEach(() => {
-//     reqClear();
-// });
+afterEach(() => {
+    reqClear();
+});
 
-// afterEach(() => {
-//     reqClear();
-// });
-
-describe('Test reviewPost', () => {
-    // test('Test successful echo', () => {
-    //     const res = request(
-    //       'GET',
-    //             `${url}:${port}/echo`,
-    //             {
-    //               qs: {
-    //                 echo: 'Hello',
-    //               },
-    //               // adding a timeout will help you spot when your server hangs
-    //               timeout: 100
-    //             }
-    //     );
-    //     const bodyObj = JSON.parse(res.body as string);
-    //     expect(res.statusCode).toBe(OK);
-    //     expect(bodyObj).toEqual('Hello');
-    // });
-    
+describe('Test reviewPost', () => {    
     test('Valid post', () => {
         const res = reqReviewPost(
             'Some Title',

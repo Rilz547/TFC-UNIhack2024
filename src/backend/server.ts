@@ -1,5 +1,4 @@
 import express, { json, Request, Response } from 'express';
-import { echo } from './echo';
 import errorHandler from 'middleware-http-errors';
 import morgan from 'morgan';
 import config from './config.json';
@@ -13,9 +12,9 @@ import { clear } from './helpers';
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
     const dbString = fs.readFileSync('./database.json');
-    setData(JSON.parse(String(dbString)));
+    // setData(JSON.parse(String(dbString)));
 }
-  
+
 // Save the database to file
 const save = () => {
     const jsonString = JSON.stringify(getData());
@@ -45,12 +44,6 @@ app.use(morgan('dev'));
 app.use('/imgurl', express.static('imgurl'));
 const PORT: number = parseInt(process.env.PORT || config.port);
 const HOST: string = process.env.IP || 'localhost';
-
-// Example get request
-app.get('/echo', (req: Request, res: Response, next) => {
-    const data = req.query.echo as string;
-    return res.json(echo(data));
-});
 
 // Post review requests
 app.post('/reviewPost', (req: Request, res: Response) => {

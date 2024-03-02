@@ -56,8 +56,11 @@ export function getNextReviewId(id: number): number {
   * @returns {{}} - on successful clear, returns an empty object
 **/
 export function clear() {
-    const data: Data = { restaurants: [], dashboardView: [] };
-    setData(data);
+    const data = getData();
+    for (const restaurant of data.restaurants) {
+        restaurant.reviews = [];
+    }
     
+    setData(data);
     return {};
 }
