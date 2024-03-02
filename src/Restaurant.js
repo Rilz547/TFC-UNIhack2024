@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import './Restaurant.scss';
+import Button from './components/Button';
 
 function StarRating({ rating, onRate }) {
     const handleClick = (value) => {
@@ -11,11 +17,11 @@ function StarRating({ rating, onRate }) {
                 <span
                     key={value}
                     onClick={() => handleClick(value)}
-                    style={{ 
-                        cursor: 'pointer', 
+                    style={{
+                        cursor: 'pointer',
                         color: value <= rating ? 'gold' : 'gray',
                         fontSize: '24px',
-                        marginRight: '4px'
+                        marginRight: '4px',
                     }}
                 >
                     &#9733;
@@ -31,6 +37,8 @@ function Restaurant(props) {
     const [userRating, setUserRating] = useState(0);
     const [reviews, setReviews] = useState([]);
 
+    const [open, setOpen] = useState(false);
+
     const handleRate = (rating) => {
         setUserRating(rating);
     };
@@ -39,13 +47,13 @@ function Restaurant(props) {
         e.preventDefault();
         const reviewTitle = e.target.elements.title.value;
         const reviewerName = e.target.elements.name.value;
-    
+
         const newReview = {
             title: reviewTitle,
             name: reviewerName,
-            rating: userRating
+            rating: userRating,
         };
-    
+
         setReviews([...reviews, newReview]);
         setUserRating(0);
 
@@ -54,37 +62,242 @@ function Restaurant(props) {
 
     return (
         <>
-            <div>
-                <h1>{restObj.heading}</h1>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Your Name: </label>
-                        <input type="text" id="name" name="name" />
+            <div style={{ padding: '48px' }}>
+                <div>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="name">Your Name: </label>
+                            <input type="text" id="name" name="name" />
+                        </div>
+                        <div>
+                            <label htmlFor="title">Review Title: </label>
+                            <input type="text" id="title" name="title" />
+                        </div>
+                        <div>
+                            <textarea
+                                style={{ resize: 'none' }}
+                                id="review"
+                                name="review"
+                                placeholder="Write a review!"
+                                rows="6"
+                                cols="50"
+                            />
+                        </div>
+                        <StarRating rating={userRating} onRate={handleRate} />
+                        <button type="submit">Submit Review</button>
+                    </form>
+                </div>
+                <div>
+                    <h2>Reviews</h2>
+                    {reviews.map((review, index) => (
+                        <div key={index}>
+                            <h3>{review.title}</h3>
+                            <p>By: {review.name}</p>
+                            <p>Rating: {review.rating}</p>
+                            <p>{review.review}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className="header">
+                    <div className="icon">
+                        <img
+                            src={restObj?.logo && restObj?.logo}
+                            width="200px"
+                            alt=""
+                        />
                     </div>
-                    <div>
-                        <label htmlFor="title">Review Title: </label>
-                        <input type="text" id="title" name="title" />
+                    <div className="heading">
+                        {restObj?.heading}
+                        <div
+                            style={{
+                                fontSize: '16px',
+                                fontWeight: 'lighter',
+                                fontStyle: 'italic',
+                                color: 'grey',
+                                marginTop: '12px',
+                            }}
+                        >
+                            Mexican Cuisine
+                        </div>
                     </div>
-                    <div>
-                        <textarea style={{resize: 'none'}} id="review" name="review" placeholder="Write a review!" rows="6" cols="50" />
-                    </div>
-                    <StarRating rating={userRating} onRate={handleRate} />
-                    <button type="submit">Submit Review</button>
-                </form>
+                </div>
+                {/* <StarRating stars={3.6} /> */}
             </div>
-            <div>
-                <h2>Reviews</h2>
-                {reviews.map((review, index) => (
-                    <div key={index}>
-                        <h3>{review.title}</h3>
-                        <p>By: {review.name}</p>
-                        <p>Rating: {review.rating}</p>
-                        <p>{review.review}</p>
+            <Button
+                buttonText="Opening Hours"
+                onClick={() => setOpen(true)}
+                height="20px"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                PaperProps={{
+                    sx: {
+                        borderRadius: '25px',
+                    },
+                }}
+            >
+                <DialogTitle
+                    id="alert-dialog-title"
+                    style={{ fontSize: '24px', fontStyle: 'italic' }}
+                >
+                    Operating Hours
+                    <div className="opening-hours">
+                        <div>Monday</div>
+                        <div>10am - 5pm</div>
+                        <div>Tuesday</div>
+                        <div>10am - 5pm</div>
+                        <div>Wednesday</div>
+                        <div>10am - 5pm</div>
+                        <div>Thursday</div>
+                        <div>10am - 5pm</div>
+                        <div>Friday</div>
+                        <div>10am - 5pm</div>
+                        <div>Saturday</div>
+                        <div>10am - 5pm</div>
+                        <div>Sunday</div>
+                        <div>10am - 5pm</div>
                     </div>
-                ))}
-            </div>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description"></DialogContentText>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
 
 export default Restaurant;
+
+// import Chart from 'react-apexcharts';
+
+// function Restaurant(props) {
+//     const { restObj } = props;
+//     const [open, setOpen] = useState(false);
+
+//     const handleClose = () => {
+//         setOpen(false);
+//     };
+
+//     console.log(restObj);
+
+//     return (
+//         <>
+//             <div style={{ padding: '48px' }}>
+//                 <div className="header">
+//                     <div className="icon">
+//                         <img
+//                             src={restObj?.logo && restObj?.logo}
+//                             width="200px"
+//                             alt=""
+//                         />
+//                     </div>
+//                     <div className="heading">
+//                         {restObj?.heading}
+//                         <div
+//                             style={{
+//                                 fontSize: '16px',
+//                                 fontWeight: 'lighter',
+//                                 fontStyle: 'italic',
+//                                 color: 'grey',
+//                                 marginTop: '12px',
+//                             }}
+//                         >
+//                             Mexican Cuisine
+//                         </div>
+//                     </div>
+//                 </div>
+//                 {/* <StarRating stars={3.6} /> */}
+//             </div>
+//             <Button
+//                 buttonText="Opening Hours"
+//                 onClick={() => setOpen(true)}
+//                 height="20px"
+//             />
+//             <Dialog
+//                 open={open}
+//                 onClose={handleClose}
+//                 aria-labelledby="alert-dialog-title"
+//                 aria-describedby="alert-dialog-description"
+//                 PaperProps={{
+//                     sx: {
+//                         borderRadius: '25px',
+//                     },
+//                 }}
+//             >
+//                 <DialogTitle
+//                     id="alert-dialog-title"
+//                     style={{ fontSize: '24px', fontStyle: 'italic' }}
+//                 >
+//                     Operating Hours
+//                     <div className="opening-hours">
+//                         <div>Monday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Tuesday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Wednesday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Thursday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Friday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Saturday</div>
+//                         <div>10am - 5pm</div>
+//                         <div>Sunday</div>
+//                         <div>10am - 5pm</div>
+//                     </div>
+//                 </DialogTitle>
+//                 <DialogContent>
+//                     <DialogContentText id="alert-dialog-description"></DialogContentText>
+//                 </DialogContent>
+//             </Dialog>
+//         </>
+//     );
+// }
+
+// export default Restaurant;
+
+// const StarRating = ({ stars }) => {
+//     const totalStars = 5;
+//     const fullStars = Math.floor(stars);
+//     const decimalPart = stars - fullStars;
+//     const lastStarPercentage = decimalPart * 100;
+
+//     const starElements = [];
+
+//     for (let i = 1; i <= totalStars; i++) {
+//         if (i <= fullStars) {
+//             // Render a full yellow star
+//             starElements.push(
+//                 <div key={i}>
+//                     <i
+//                         className="fa-solid fa-star"
+//                         style={{ color: 'yellow' }}
+//                     />
+//                 </div>
+//             );
+//         } else if (i === fullStars + 1) {
+//             // Render a partially filled star with gradient color
+//             const gradientStyle = `linear-gradient(90deg, yellow ${lastStarPercentage}%, transparent ${lastStarPercentage}%)`;
+//             starElements.push(
+//                 <div key={i}>
+//                     <i
+//                         className="fa-solid fa-star"
+//                         style={{ backgroundImage: gradientStyle }}
+//                     />
+//                 </div>
+//             );
+//         } else {
+//             // Render an empty star
+//             starElements.push(
+//                 <div key={i}>
+//                     <i className="fa-solid fa-star" />
+//                 </div>
+//             );
+//         }
+//     }
+
+//     return <div className="star-rating">{starElements}</div>;
+// };
