@@ -15,7 +15,7 @@
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 20% [col-start] 30% [col-start] 30% [col-start] 10% [col-start];
+    grid-template-columns: 20% [col-start] 40% [col-start] 30% [col-start];
     gap: 32px;
     border-radius: 25px;
     padding: 24px;
@@ -31,7 +31,7 @@
 }
 
 .photos {
-    width: 40%;
+    // width: 40%;
     height: 400px;
     border-radius: 25px;
     padding: 32px;
@@ -42,7 +42,7 @@
 
 .review-container {
     width: 55%;
-    height: 400px;
+    height: 800px;
     border-radius: 25px;
     padding: 32px;
     background: white;
@@ -65,17 +65,30 @@
         background: white;
         box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
         margin-top: 16px;
+        display: grid;
+        grid-template-columns: 40% 40% 40%;
+
         .title {
             font-size: 24px;
             font-weight: bold;
         }
         .contents {
             margin-top: 16px;
-            max-width: 50%;
             font-size: 12px;
             display: grid;
             gap: 4px;
-            grid-template-columns: 20% 60%;
+            grid-template-columns: 40% 60%;
+        }
+        .image {
+            border-radius: 25px;
+
+            transition: all 0.15s ease-in-out;
+            &:hover {
+                cursor: pointer;
+                scale: 1.1;
+                opacity: 0.7;
+                transition: 0.15s ease-in-out;
+            }
         }
     }
 }

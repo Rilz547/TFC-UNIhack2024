@@ -1,0 +1,13 @@
+.details-container {
+    border-radius: 25px;
+    padding: 32px;
+    background: white;
+    box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
+    margin-top: 32px;
+
+    .content {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        align-items: center;
+    }
+}
