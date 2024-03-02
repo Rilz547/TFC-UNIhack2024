@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import './RoundedContainer.scss';
 
 function Component(props) {
-    const { heading, content, logo, description, style } = props;
+    const { heading, content, logo, description, style, route } = props;
     const [open, setOpen] = React.useState(false);
     const location = useLocation();
 
@@ -20,7 +20,7 @@ function Component(props) {
         setOpen(false);
     };
 
-    const isDashboardRoute = location.pathname === '/dashboard';
+    const isDashboardRoute = location.pathname === '/restaurant';
 
     return (
         <>
@@ -39,7 +39,7 @@ function Component(props) {
                     </div>
                 </div>
             ) : (
-                <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                <Link to={route} style={{ textDecoration: 'none' }}>
                     <div className="container-wrapper" style={style}>
                         <div>
                             {logo && <img src={logo} alt="" className="logo" />}
