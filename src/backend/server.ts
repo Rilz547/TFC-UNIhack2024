@@ -1,16 +1,18 @@
 import express, { json, Request, Response } from 'express';
+import { echo } from './echo';
 import errorHandler from 'middleware-http-errors';
 import morgan from 'morgan';
 import config from './config.json';
 import cors from 'cors';
 import fs from 'fs';
 import { getData, setData } from './dataStore';
+import { reviewPost } from './review';
 
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
     const dbString = fs.readFileSync('./database.json');
     setData(JSON.parse(String(dbString)));
-  }
+}
   
 // Save the database to file
 const save = () => {
@@ -30,6 +32,17 @@ app.use('/imgurl', express.static('imgurl'));
 const PORT: number = parseInt(process.env.PORT || config.port);
 const HOST: string = process.env.IP || 'localhost';
 
+// Example get request
+app.get('/echo', (req: Request, res: Response, next) => {
+    const data = req.query.echo as string;
+    return res.json(echo(data));
+});
+
+app.post('/reviewPost', (req: Request, res: Response) => {
+    const { reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId } = req.body;
+    res.json(reviewPost(reviewTitle, reviewer, rating, quality, price, service, reviewText, restaurantId));
+    save();
+});
 
 
 // Keep this BENEATH route definitions
