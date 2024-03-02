@@ -1,10 +1,10 @@
 function Restaurant(props) {
-    const { heading } = props;
+    const { restObj } = props;
 
     return (
         <>
             <div>
-                <h1>{heading && heading}</h1>
+                <h1>Heading</h1>
             </div>
         </>
     );

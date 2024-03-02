@@ -31,12 +31,8 @@ const App = () => (
             {restaurantsBackend.map((element, index) => {
                 return (
                     <Route
-                        path={restaurantsBackend[index].route}
-                        element={
-                            <Restaurant
-                                heading={restaurantsBackend[index].heading}
-                            />
-                        }
+                        path={element.route}
+                        element={<Restaurant restObj={element} />}
                     />
                 );
             })}
