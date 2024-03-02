@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap");
 
-.title {
+.homepage-title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@
     position: relative;
 }
 
-.title::before {
+.homepage-title::before {
     content: '';
     position: absolute;
     top: 0;

@@ -6,7 +6,7 @@ import unswLogo from './unsw-logo.png';
 
 const Homepage = () => (
     <div style={{ padding: '48px' }}>
-        <div className='title'>
+        <div className='homepage-title'>
             <h1 id='title-text' >Food Reviews for </h1>
             <img id='unsw-logo' alt='UNSW Logo' src={unswLogo} />
         </div>
