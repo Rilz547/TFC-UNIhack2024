@@ -203,7 +203,7 @@ const AddReview = (props) => {
                     }}
                 >
                     <IconButton onClick={() => fileInputRef.current.click()}>
-                        <i class="fa-solid fa-camera"></i>
+                        <i className="fa-solid fa-camera"></i>
                     </IconButton>
                     <Button
                         titleContent={
