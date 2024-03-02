@@ -34,7 +34,7 @@ let data = {
   ],
 
   // Below is a sample dashboard view object
-  dashboard_view: [
+  dashboardView: [
     {
       title:  'Guzman Y Gomez',
       id: 987654321,
