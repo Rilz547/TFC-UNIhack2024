@@ -1,7 +1,10 @@
-import './App.scss';
 import Chart from 'react-apexcharts';
 import Container from './components/RoundedContainer.js';
 import Zoom from '@mui/material/Zoom';
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Dashboard from './Dashboard';
 
 const restarunts = [
     {
@@ -27,63 +30,81 @@ const restarunts = [
     },
 ];
 
+// App.js
+
 function App() {
     return (
         <>
-            <div className="App">
-                <div
-                    style={{
-                        display: 'inline-flex',
-                        gap: '32px',
-                        marginTop: '32px',
-                        marginLeft: '32px',
-                        alignItems: 'center',
-                    }}
-                >
-                    <h2>Some Cool Icons</h2>
-                    <i className="fa-solid fa-circle" />
-                    <i className="fa-solid fa-square" />
-                    <i className="fa-solid fa-house" />
-                    <i className="fa-solid fa-moon" />
-                </div>
-
-                <h2 style={{ marginLeft: '32px' }}>
-                    Some Big ol Buttons (give em a click)
-                </h2>
-                <div className="rest-container">
-                    {restarunts.map((element, index) => {
-                        return (
-                            <Zoom
-                                in={true}
-                                style={{ transitionDelay: `${100 * index}ms` }}
-                            >
-                                <div
-                                    style={{
-                                        background: `${
-                                            element?.colour
-                                                ? element?.colour
-                                                : ''
-                                        }`,
-                                    }}
-                                >
-                                    <Container
-                                        heading={element.heading}
-                                        content={<>{element.content} </>}
-                                        logo={element?.logo}
-                                        description={element?.description}
-                                        style={{
-                                            width: '300px',
-                                            height: '120px',
-                                        }}
-                                    />
-                                </div>
-                            </Zoom>
-                        );
-                    })}
-                </div>
-            </div>
+            <Router>
+                <button type="button">
+                    <Link to="/dashboard">Dashboard</Link>
+                </button>
+                <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+            </Router>
         </>
     );
 }
+
+// function App() {
+//     return (
+//         <>
+//             <div className="App">
+//                 {/* <div
+//                     style={{
+//                         display: 'inline-flex',
+//                         gap: '32px',
+//                         marginTop: '32px',
+//                         marginLeft: '32px',
+//                         alignItems: 'center',
+//                     }}
+//                 >
+//                     <h2>Some Cool Icons</h2>
+//                     <i className="fa-solid fa-circle" />
+//                     <i className="fa-solid fa-square" />
+//                     <i className="fa-solid fa-house" />
+//                     <i className="fa-solid fa-moon" />
+//                 </div> */}
+
+//                 {/* <h2 style={{ marginLeft: '32px' }}>
+//                     Some Big ol Buttons (give em a click)
+//                 </h2> */}
+//                 {/* <div className="rest-container">
+//                     {restarunts.map((element, index) => {
+//                         return (
+//                             <Zoom
+//                                 in={true}
+//                                 style={{ transitionDelay: `${100 * index}ms` }}
+//                             >
+//                                 <div
+//                                     style={{
+//                                         background: `${
+//                                             element?.colour
+//                                                 ? element?.colour
+//                                                 : ''
+//                                         }`,
+//                                     }}
+//                                 >
+//                                     <Container
+//                                         heading={element.heading}
+//                                         content={<>{element.content} </>}
+//                                         logo={element?.logo}
+//                                         description={element?.description}
+//                                         style={{
+//                                             width: '300px',
+//                                             height: '120px',
+//                                         }}
+//                                     />
+//                                 </div>
+//                             </Zoom>
+//                         );
+//                     })}
+//                 </div> */}
+//                 <Router />
+//             </div>
+//         </>
+//     );
+// }
 
 export default App;
