@@ -1,5 +1,5 @@
-import { getData } from "./dataStore";
-import { Restaurant } from "./interfaces";
+import { getData, setData } from "./dataStore";
+import { Restaurant, Data } from "./interfaces";
 
 /**
  * Generates the next expected id for a restaurant
@@ -48,4 +48,16 @@ export function getNextReviewId(id: number): number {
     }
 
     return restaurant.reviews.length + 1;
+}
+
+/**
+  * Resets the internal data of the application to its initial state
+  *
+  * @returns {{}} - on successful clear, returns an empty object
+**/
+export function clear() {
+    const data: Data = { restaurants: [], dashboardView: [] };
+    setData(data);
+    
+    return {};
 }
