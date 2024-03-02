@@ -4,13 +4,14 @@ let data = {
   // Below is a sample restaurant object
   restaurants: [
     {
-      name: 'GYG';
-      cuisine: 'Mexican';
-      location: 'University Terraces Lower Kensington Campus, High St, Kensington NSW 2052';
-      operating_hours: '10am-5pm';
-      phone: '03432212112';
-      website: 'https://www.guzmanygomez.com.au/';
-      description: 'Great mexican good gg'
+      title: 'GYG',
+      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Guzman_y_Gomez_logo.svg/1200px-Guzman_y_Gomez_logo.svg.png',
+      cuisine: 'Mexican',
+      location: 'University Terraces Lower Kensington Campus, High St, Kensington NSW 2052',
+      operatingHours: '10am-5pm',
+      phone: '03432212112',
+      website: 'https://www.guzmanygomez.com.au/',
+      description: 'Great mexican good gg',
       reviews: [
         {
             reviewTitle: 'Value for money';
@@ -34,7 +35,7 @@ let data = {
   ],
 
   // Below is a sample dashboard view object
-  dashboard_view: [
+  dashboardView: [
     {
       title:  'Guzman Y Gomez',
       id: 987654321,
