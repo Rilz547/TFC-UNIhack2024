@@ -65,6 +65,7 @@ const App = () => (
                     <Route
                         path={element.route}
                         element={<Restaurant restObj={element} />}
+                        key={index}
                     />
                 );
             })}

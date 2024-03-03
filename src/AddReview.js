@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from './components/Button';
 import IconButton from '@mui/material/IconButton';
 import { format } from 'date-fns';
+import Fade from '@mui/material/Fade';
 
 const AddReview = (props) => {
     const { handleSubmit, setAddReview, open } = props;
@@ -202,9 +203,34 @@ const AddReview = (props) => {
                         marginTop: '16px',
                     }}
                 >
-                    <IconButton onClick={() => fileInputRef.current.click()}>
+                    {/* <IconButton onClick={() => fileInputRef.current.click()}>
                         <i class="fa-solid fa-camera"></i>
-                    </IconButton>
+                    </IconButton> */}
+
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    className="fa-solid fa-camera"
+                                    style={{ fontSize: '18px', color: 'white' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                        color: 'white',
+                                    }}
+                                >
+                                    Upload Image
+                                </div>
+                            </div>
+                        }
+                        onClick={() => fileInputRef.current.click()}
+                        height="18px"
+                        width="130px"
+                        colour="#4cbb17"
+                    />
+
                     <Button
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
@@ -225,11 +251,30 @@ const AddReview = (props) => {
                         }
                         onClick={() => handleReviewSubmission(review)}
                         height="18px"
-                        width="80px"
+                        width="60px"
                         colour="#4cbb17"
                         disabled={disabled}
                     />
                 </div>
+                <Fade in={review?.image} style={{ transitionDelay: '200ms' }}>
+                    <div>
+                        {review?.image && (
+                            <img
+                                src={review?.image}
+                                alt=""
+                                style={{
+                                    width: '200px',
+                                    height: '200px',
+                                    marginBottom: '16px',
+                                    marginTop: '24px',
+                                    marginLeft: '110px',
+                                    objectFit: 'cover',
+                                    borderRadius: '10px',
+                                }}
+                            />
+                        )}
+                    </div>
+                </Fade>
             </DialogContent>
         </Dialog>
     );

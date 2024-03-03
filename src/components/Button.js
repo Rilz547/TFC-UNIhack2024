@@ -9,6 +9,7 @@ function Button(props) {
         colour = '#FAF0CA',
         titleContent,
         disabled = false,
+        style,
     } = props;
 
     return (
@@ -19,6 +20,7 @@ function Button(props) {
                         className="button"
                         onClick={onClick}
                         style={{
+                            ...style,
                             width: width,
                             height: height,
                             background: colour,
@@ -36,6 +38,7 @@ function Button(props) {
                         className="button"
                         onClick={onClick}
                         style={{
+                            ...style,
                             width: width,
                             height: height,
                             background: colour,

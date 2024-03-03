@@ -1,5 +1,5 @@
 .container-wrapper {
-    border-radius: 25px;
+    border-radius: 20px;
     padding: 24px;
     background: white;
     box-shadow: 7px 7px 20px #c4c4c4, -7px -7px 20px #ffffff;
@@ -28,7 +28,7 @@
     transition: all 0.15s ease-in-out;
     &:hover {
         cursor: pointer;
-        scale: 1.01;
+        scale: 1.05;
         transition: 0.15s ease-in-out;
         background-color: #f0f1f2;
     }
