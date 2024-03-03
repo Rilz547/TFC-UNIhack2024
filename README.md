@@ -1,31 +1,38 @@
-# Getting Started
+# UniDine
+![logo](logo.png)
 
-Clone this repo using sourcetree or CLI - Or if ju just wanna play around and not commit anything can just download the zip file.
-<br> Open up the project folder in vscode or ur pref IDE. (needs to be the whole folder, dont just open the src)
-</br>
+**A food review platform for students, by students.**
 
-## Installing/Using NPM
+## Installation ⬇️
 
-Make sure you got node package manager installed on ur system. Run `npm --version`, if somethin pops up ur good. npm does have some built in backwards capablity. But if u run into problems installing packages or running/launching the website u might have to update ur npm version (im using 8.19.2).
+Ensure npm in installed locally on your device by running `npm --version`.
 
-## Installing Packages
+To install all required dependancies, run `npm install`.
 
-Once you got npm installed, open a terminal in vscode (should automatically be in the projects directory - if not, cd till you get there)
-<br> In that terminal run `npm i`. You'll see some crazy matrix lookin installs. You might see some errors and warnings, as long as none of them say "critical", you're good.
-</br>
 
-## Starting the Website
+## Development 📱
 
-In the project directory terminal, you can run:
+Ensure npm in installed locally on your device by running `npm --version`.
 
-### `npm start`
+In the working repo directory, run
+```
+npm install
+```
+to download all dependancies.
 
-Runs the app in the development mode.\
+To start the application, run the following commands on separate terminals,
+```
+npm run startb      // start the backend
+npm run startf      // start the frontend
+```
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How we built it 💻
+- **Frontend**: we used React to create and handle the UI of our web app, with CSS and Material UI being used to provide the style and components of the frontend pages.
+- **Backend**: Express.js was used to handle the routes and endpoints for the backend server to interact with the stored data. Typescript was the primary language used to handle server-side logic
 
-## Making Some Basic Edits
+## What's next for UniDine 🚀
+- Authentication service: The authentication service will be used to verify that the user is a university student, ensuring our product effectively serves the needs of our target audience. Due to time constraints, we were unable to develop a functional authentication service, hence this is the priority for future iterations.
+- Popular meals tab: Having a tab on the homepage that shows the highest-rated meals within a time frame (week/month) would allow students to view the past and current popular meals as rated by students on campus. This would allow students to not only discover new food options but also stay up to date with limited-time promotions and offers.
+- Expansion to other universities locally and globally.
 
-If you want to play around, feel free to delete any of my code inside `App.js` it is all just me testing the packages. Anything you want to insert can be done by inserting code into the return of `function App()`.
