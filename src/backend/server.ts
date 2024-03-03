@@ -11,12 +11,14 @@ import { clear } from './helpers';
 
 // Check if database.json exists and load it
 if (fs.existsSync('./database.json')) {
+    console.log("DATABASE DOES NOT EXIST - CREATING")
     const dbString = fs.readFileSync('./database.json');
     setData(JSON.parse(String(dbString)));
 }
 
 // Save the database to file
 const save = () => {
+    console.log("DATABASE EXISTS - IMPORTING")
     const jsonString = JSON.stringify(getData());
     fs.writeFileSync('./database.json', jsonString);
 };
@@ -58,6 +60,11 @@ app.delete('/clear', (req: Request, res: Response) => {
     save();
 });
 
+// Data requests
+app.get('/data', (req: Request, res: Response) => {
+  res.json(getData());
+})
+
 
 // Keep this BENEATH route definitions
 // handles errors nicely
@@ -65,11 +72,11 @@ app.use(errorHandler());
 
 // start server
 const server = app.listen(PORT, HOST, () => {
-  // DO NOT CHANGE THIS LINE
-  console.log(`⚡️ Server started on port ${PORT} at ${HOST}`);
+    // DO NOT CHANGE THIS LINE
+    console.log(`⚡️ Server started on port ${PORT} at ${HOST}`);
 });
 
 // For coverage, handle Ctrl+C gracefully
 process.on('SIGINT', () => {
-  server.close(() => console.log('Shutting down server gracefully.'));
+    server.close(() => console.log('Shutting down server gracefully.'));
 });

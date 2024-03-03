@@ -57,7 +57,11 @@ export const restaurantsBackend = [
     },
 ];
 
-console.log(getData());
+fetch('http://localhost:32341/data')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.restaurants)
+    })
 
 // getData().restaurants.map((element, index) => {
 //     return console.log(element);

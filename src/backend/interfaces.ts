@@ -34,7 +34,7 @@ export interface Restaurant {
 export interface Review {
     reviewTitle: string;
     reviewer: string;
-    date: Date;
+    date: number;
     rating: number;
     likes: number;
 
