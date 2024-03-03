@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const Details = (props) => {
-    const { content } = props;
+    const { content, id } = props;
     const [open, setOpen] = useState(false);
 
     return (
@@ -26,7 +26,10 @@ const Details = (props) => {
                             <div style={{ display: 'inline-flex' }}>
                                 <i
                                     className="fa-solid fa-location-dot"
-                                    style={{ fontSize: '18px', color: 'red' }}
+                                    style={{
+                                        fontSize: '18px',
+                                        color: 'red',
+                                    }}
                                 ></i>
                                 <div
                                     style={{
@@ -38,12 +41,13 @@ const Details = (props) => {
                                 </div>
                             </div>
                         }
-                        onClick={() =>
-                            window.open(
-                                'https://maps.app.goo.gl/2kfcUb3VRWn6vbEFA',
-                                '_blank'
-                            )
-                        }
+                        onClick={() => {
+                            id === 0 &&
+                                window.open(
+                                    'https://maps.app.goo.gl/2kfcUb3VRWn6vbEFA',
+                                    '_blank'
+                                );
+                        }}
                         height="18px"
                         width="100px"
                         colour=""
@@ -70,6 +74,7 @@ const Details = (props) => {
                         height="18px"
                         width="80px"
                     />
+
                     <Button
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
@@ -87,16 +92,12 @@ const Details = (props) => {
                                 </div>
                             </div>
                         }
-                        onClick={() =>
-                            window.open(
-                                'https://www.guzmanygomez.com.au',
-                                '_blank'
-                            )
-                        }
+                        onClick={() => window.open(content?.website, '_blank')}
                         height="18px"
                         width="90px"
                         colour="lightgrey"
                     />
+
                     <Button
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
@@ -114,12 +115,13 @@ const Details = (props) => {
                                 </div>
                             </div>
                         }
-                        onClick={() =>
-                            window.open(
-                                'https://www.guzmanygomez.com.au/our-food/',
-                                '_blank'
-                            )
-                        }
+                        onClick={() => {
+                            id === 0 &&
+                                window.open(
+                                    'https://www.guzmanygomez.com.au/our-food/',
+                                    '_blank'
+                                );
+                        }}
                         height="18px"
                         width="90px"
                         colour="salmon"
