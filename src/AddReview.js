@@ -14,14 +14,13 @@ const AddReview = (props) => {
     const fileInputRef = useRef(null);
 
     const [review, setReview] = useState({
-        reviewTitle: 'null',
-        reviewer: 'null',
-        reviewText: 'null',
-        date: Date.now(),
-        price: 3,
+        reviewTitle: null,
+        reviewer: null,
+        rating: 1,
         quality: 3,
+        price: 3,
         service: 3,
-        image: null, // Add image state
+        reviewText: null,
     });
 
     const [disabled, setDisabled] = useState(true);
@@ -40,12 +39,14 @@ const AddReview = (props) => {
             setReview({
                 reviewTitle: null,
                 reviewer: null,
-                reviewText: null,
-                price: 3,
+                rating: 1,
                 quality: 3,
+                price: 3,
                 service: 3,
-                image: null, // Reset image state
-                date: new Date(),
+                reviewText: null,
+
+                // image: null, // Reset image state
+                // date: Date.now(),
             });
         }
     }, [open]);
@@ -207,7 +208,7 @@ const AddReview = (props) => {
                         <i class="fa-solid fa-camera"></i>
                     </IconButton> */}
 
-                    <Button
+                    {/* <Button
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
                                 <i
@@ -229,7 +230,7 @@ const AddReview = (props) => {
                         height="18px"
                         width="130px"
                         colour="#4cbb17"
-                    />
+                    /> */}
 
                     <Button
                         titleContent={

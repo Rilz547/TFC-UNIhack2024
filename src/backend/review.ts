@@ -1,7 +1,7 @@
 import { Review } from './interfaces';
-// @ts-ignore
-import { getData, setData } from './dataStore.ts'
 
+import { getData, setData } from './dataStore'
+import HTTPError from 'http-errors';
 
 /**
  * Given the supplied information will create a new review 
@@ -24,9 +24,21 @@ import { getData, setData } from './dataStore.ts'
 export function reviewPost(reviewTitle: string, reviewer: string, rating: number,
     quality: number, price: number, service: number, reviewText: string, restaurantId: number) {
 
+    if (!reviewTitle.trim() || !reviewer.trim() || !reviewText.trim()) {
+        throw HTTPError(400, 'Invalid string');
+    }
+    if (rating < 1 || rating > 5 || quality < 1 || quality > 5 || 
+        price < 1 || price > 5 || service < 1 || service > 5) {
+            throw HTTPError(400, 'Number must be between 1 and 5');
+    }
+
+    let restaurantFound = false;
+
+
     const data = getData();
     for (const restaurant of data.restaurants) {
         if (restaurant.id === restaurantId) {
+            restaurantFound = true;
             restaurant.reviews.push({
                 reviewTitle: reviewTitle,
                 reviewer: reviewer,
@@ -42,7 +54,10 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
             
         }
     }
-    
+    if (!restaurantFound) {
+        return HTTPError(400, 'Restaurant not found');
+    }
 
     return {};
 }
+

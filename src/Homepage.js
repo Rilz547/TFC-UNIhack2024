@@ -139,6 +139,7 @@ const Homepage = () => {
         fetch('http://localhost:32341/data')
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setData(data.dashboardView);
             });
     }, []);
@@ -148,7 +149,7 @@ const Homepage = () => {
             <div className="homepage-title">
                 <h1 id="title-text">UniDine </h1>
                 <h1 style={{ marginLeft: '16px', fontSize: '50px' }}>
-                    <i class="fa-solid fa-at"></i>
+                    <i className="fa-solid fa-at"></i>
                 </h1>
 
                 <img id="unsw-logo" alt="UNSW Logo" src={unswLogo} />

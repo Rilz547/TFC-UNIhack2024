@@ -13,8 +13,6 @@ import Zoom from '@mui/material/Zoom';
 import Fade from '@mui/material/Fade';
 import { format } from 'date-fns';
 
-import { reviewPost } from './backend/review.ts';
-
 var chart = {
     series: [
         {
@@ -149,23 +147,22 @@ function Restaurant(props) {
         }
     };
 
-    const handleSubmit = useMemo(
-        () => (newReview) => {
-            console.log(newReview);
-            reviewPost(
-                newReview?.reviewTitle,
-                newReview?.reviewer,
-                newReview?.rating,
-                newReview?.quality,
-                newReview?.price,
-                newReview?.service,
-                newReview?.reviewText,
-                newReview?.restaurantId
-            );
-            setReviews([...reviews, newReview]);
-        },
-        [reviews]
-    );
+    const handleSubmit = (newReview) => {
+        const newRev = { ...newReview, restaurantId: data.id, likes: 0 };
+        console.log(newRev);
+        fetch('http://localhost:32341/reviewPost', {
+            method: 'POST',
+            body: JSON.stringify(newRev),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data.restaurants.find((e) => e.id === restObj.id));
+            });
+        setReviews([...reviews, newReview]);
+    };
 
     useEffect(() => {
         fetch('http://localhost:32341/data')
