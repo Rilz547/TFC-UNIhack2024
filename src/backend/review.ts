@@ -1,5 +1,6 @@
 import { Review } from './interfaces';
-import { getData, setData } from './dataStore'
+// @ts-ignore
+import { getData, setData } from './dataStore.ts'
 
 
 /**

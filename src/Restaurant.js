@@ -167,16 +167,6 @@ function Restaurant(props) {
         [reviews]
     );
 
-    // useEffect(() => {
-    //     fetch('http://localhost:32341/data')
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             setReviews(
-    //                 data.restaurants.find((e) => e.id === restObj.id).reviews
-    //             );
-    //         });
-    // }, [restObj.id, reviews]);
-
     useEffect(() => {
         fetch('http://localhost:32341/data')
             .then((response) => response.json())

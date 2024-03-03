@@ -6,7 +6,6 @@
       "resolveJsonModule": true,
       "allowJs": true,
       "ignoreDeprecations": "5.0",
-      "allowImportingTsExtensions": true,
     },
     "exclude": [
       "**/**_broken.ts"
