@@ -6,17 +6,18 @@ import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 import Button from './components/Button';
 import IconButton from '@mui/material/IconButton';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
+import Fade from '@mui/material/Fade';
 
 const AddReview = (props) => {
     const { handleSubmit, setAddReview, open } = props;
     const fileInputRef = useRef(null);
 
     const [review, setReview] = useState({
-        title: null,
-        name: null,
-        description: null,
-        time: '',
+        reviewTitle: 'null',
+        reviewer: 'null',
+        reviewText: 'null',
+        date: Date.now(),
         price: 3,
         quality: 3,
         service: 3,
@@ -27,9 +28,9 @@ const AddReview = (props) => {
 
     useEffect(() => {
         setDisabled(
-            review?.title === null ||
-                review?.name === null ||
-                review?.description === null
+            review?.reviewTitle === null ||
+                review?.reviewer === null ||
+                review?.reviewText === null
         );
     }, [review]);
 
@@ -37,14 +38,14 @@ const AddReview = (props) => {
         if (!open) {
             // Reset review state when the dialog is closed
             setReview({
-                title: null,
-                name: null,
-                description: null,
+                reviewTitle: null,
+                reviewer: null,
+                reviewText: null,
                 price: 3,
                 quality: 3,
                 service: 3,
                 image: null, // Reset image state
-                time: format(new Date(), 'dd/MM/yyyy'),
+                date: new Date(),
             });
         }
     }, [open]);
@@ -95,14 +96,14 @@ const AddReview = (props) => {
                     <div>
                         <TextField
                             id="outlined-basic"
-                            label="User Name"
+                            label="Name"
                             variant="outlined"
                             style={{ marginTop: '8px' }}
-                            value={review.name}
+                            value={review.reviewer}
                             onChange={(e) =>
                                 setReview({
                                     ...review,
-                                    name: e.target.value,
+                                    reviewer: e.target.value,
                                 })
                             }
                         />
@@ -117,7 +118,7 @@ const AddReview = (props) => {
                             onChange={(e) =>
                                 setReview({
                                     ...review,
-                                    title: e.target.value,
+                                    reviewTitle: e.target.value,
                                 })
                             }
                         />
@@ -132,11 +133,11 @@ const AddReview = (props) => {
                         width: '100%',
                         marginBottom: '16px',
                     }}
-                    value={review.description}
+                    value={review.reviewText}
                     onChange={(e) =>
                         setReview({
                             ...review,
-                            description: e.target.value,
+                            reviewText: e.target.value,
                         })
                     }
                 />
@@ -202,14 +203,39 @@ const AddReview = (props) => {
                         marginTop: '16px',
                     }}
                 >
-                    <IconButton onClick={() => fileInputRef.current.click()}>
-                        <i className="fa-solid fa-camera"></i>
-                    </IconButton>
+                    {/* <IconButton onClick={() => fileInputRef.current.click()}>
+                        <i class="fa-solid fa-camera"></i>
+                    </IconButton> */}
+
                     <Button
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
                                 <i
-                                    className="fa-solid fa-floppy-disk"
+                                    classreviewer="fa-solid fa-camera"
+                                    style={{ fontSize: '18px', color: 'white' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                        color: 'white',
+                                    }}
+                                >
+                                    Upload Image
+                                </div>
+                            </div>
+                        }
+                        onClick={() => fileInputRef.current.click()}
+                        height="18px"
+                        width="130px"
+                        colour="#4cbb17"
+                    />
+
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    classreviewer="fa-solid fa-floppy-disk"
                                     style={{ fontSize: '18px', color: 'white' }}
                                 ></i>
                                 <div
@@ -225,11 +251,30 @@ const AddReview = (props) => {
                         }
                         onClick={() => handleReviewSubmission(review)}
                         height="18px"
-                        width="80px"
+                        width="60px"
                         colour="#4cbb17"
                         disabled={disabled}
                     />
                 </div>
+                <Fade in={review?.image} style={{ transitionDelay: '200ms' }}>
+                    <div>
+                        {review?.image && (
+                            <img
+                                src={review?.image}
+                                alt=""
+                                style={{
+                                    width: '200px',
+                                    height: '200px',
+                                    marginBottom: '16px',
+                                    marginTop: '24px',
+                                    marginLeft: '110px',
+                                    objectFit: 'cover',
+                                    borderRadius: '10px',
+                                }}
+                            />
+                        )}
+                    </div>
+                </Fade>
             </DialogContent>
         </Dialog>
     );

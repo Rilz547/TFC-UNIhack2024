@@ -1,5 +1,6 @@
 import { Review } from './interfaces';
-import { getData, setData } from './dataStore.ts'
+import { getData, setData } from './dataStore'
+
 
 /**
  * Given the supplied information will create a new review 
@@ -37,7 +38,7 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
                 reviewText: reviewText
             });
             
-            console.log(restaurant)    
+            
         }
     }
     

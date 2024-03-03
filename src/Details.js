@@ -25,8 +25,8 @@ const Details = (props) => {
                         titleContent={
                             <div style={{ display: 'inline-flex' }}>
                                 <i
-                                    className="fa-solid fa-backward"
-                                    style={{ fontSize: '18px' }}
+                                    className="fa-solid fa-location-dot"
+                                    style={{ fontSize: '18px', color: 'red' }}
                                 ></i>
                                 <div
                                     style={{
@@ -34,13 +34,18 @@ const Details = (props) => {
                                         fontWeight: 'bold',
                                     }}
                                 >
-                                    Back
+                                    Direct Me
                                 </div>
                             </div>
                         }
-                        onClick={() => window.history.back()}
+                        onClick={() =>
+                            window.open(
+                                'https://maps.app.goo.gl/2kfcUb3VRWn6vbEFA',
+                                '_blank'
+                            )
+                        }
                         height="18px"
-                        width="80px"
+                        width="100px"
                         colour=""
                     />
 

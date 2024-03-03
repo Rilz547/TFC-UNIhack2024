@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -11,7 +11,8 @@ import AddReview from './AddReview.js';
 import Details from './Details.js';
 import Zoom from '@mui/material/Zoom';
 import Fade from '@mui/material/Fade';
-import { getData } from './backend/dataStore.ts';
+import { format } from 'date-fns';
+
 import { reviewPost } from './backend/review.ts';
 
 var chart = {
@@ -58,24 +59,205 @@ var chart = {
         },
     },
 };
+var chart2 = {
+    series: [
+        {
+            name: 'Average Rating',
+            data: [3, 5, 5],
+        },
+    ],
+    options: {
+        chart: {
+            height: 350,
+            type: 'radar',
+            toolbar: {
+                show: false,
+            },
+        },
+
+        dataLabels: {
+            enabled: false,
+        },
+        plotOptions: {
+            radar: {
+                size: 120,
+                polygons: {
+                    strokeColors: '#e9e9e9',
+                    fill: {
+                        colors: ['#f8f8f8', '#fff'],
+                    },
+                },
+            },
+        },
+
+        colors: ['#FA8072'],
+        markers: {
+            show: false,
+            size: 2,
+            colors: ['#fff'],
+            strokeColor: '#FF4560',
+            strokeWidth: 2,
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val;
+                },
+            },
+        },
+        xaxis: {
+            categories: ['Price', 'Quality', 'Service'],
+            labels: {
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                },
+            },
+        },
+        yaxis: {
+            tickAmount: 5,
+            max: 5,
+            min: 0,
+            labels: {
+                formatter: function (val, i) {
+                    if (i % 2 === 0) {
+                        return val;
+                    } else {
+                        return '';
+                    }
+                },
+            },
+        },
+    },
+};
 
 function Restaurant(props) {
     const { restObj } = props;
     const [addReview, setAddReview] = useState(false);
-    const [reviews, setReviews] = useState(getData().restaurants[0].reviews);
+    const [reviews, setReviews] = useState([]);
     const [openImage, setOpenImage] = useState(null);
+    const [problemReport, setProblemReport] = useState(false);
+    const [data, setData] = useState([]);
+    const [expandedReviews, setExpandedReviews] = useState([]);
+    const toggleReview = (index) => {
+        if (expandedReviews.includes(index)) {
+            setExpandedReviews(
+                expandedReviews.filter((item) => item !== index)
+            );
+        } else {
+            setExpandedReviews([...expandedReviews, index]);
+        }
+    };
 
     const handleSubmit = useMemo(
         () => (newReview) => {
             console.log(newReview);
+            reviewPost(
+                newReview?.reviewTitle,
+                newReview?.reviewer,
+                newReview?.rating,
+                newReview?.quality,
+                newReview?.price,
+                newReview?.service,
+                newReview?.reviewText,
+                newReview?.restaurantId
+            );
             setReviews([...reviews, newReview]);
         },
         [reviews]
     );
 
+    // useEffect(() => {
+    //     fetch('http://localhost:32341/data')
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             setReviews(
+    //                 data.restaurants.find((e) => e.id === restObj.id).reviews
+    //             );
+    //         });
+    // }, [restObj.id, reviews]);
+
+    useEffect(() => {
+        fetch('http://localhost:32341/data')
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data.restaurants.find((e) => e.id === restObj.id));
+                console.log(data.restaurants.find((e) => e.id === restObj.id));
+                setReviews(
+                    data.restaurants.find((e) => e.id === restObj.id).reviews
+                );
+            });
+    }, [restObj.id]);
+
     return (
         <>
-            <div style={{ padding: '48px' }}>
+            <div className="body" style={{ padding: '48px' }}>
+                <div className="toolbar">
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    className="fa-solid fa-backward"
+                                    style={{ fontSize: '18px' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Back
+                                </div>
+                            </div>
+                        }
+                        onClick={() => window.history.back()}
+                        height="18px"
+                        width="80px"
+                        colour=""
+                    />
+
+                    <Button
+                        titleContent={
+                            <div style={{ display: 'inline-flex' }}>
+                                <i
+                                    className="fa-solid fa-circle-exclamation"
+                                    style={{ fontSize: '18px' }}
+                                ></i>
+                                <div
+                                    style={{
+                                        marginLeft: '12px',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Report a Problem
+                                </div>
+                            </div>
+                        }
+                        onClick={() => setProblemReport(true)}
+                        height="18px"
+                        width="160px"
+                        colour=""
+                    />
+                    <Dialog
+                        open={problemReport}
+                        onClose={() => setProblemReport(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                        PaperProps={{
+                            sx: {
+                                borderRadius: '25px',
+                            },
+                        }}
+                    >
+                        <DialogContent>
+                            You're inquisitive aren't you 😁 - Time pending, we
+                            would like this feature to allow for users to report
+                            if elements of the page are wrong (location, menu
+                            etc) or if someone posts an offensive review (i.e
+                            profanic, racist).
+                        </DialogContent>
+                    </Dialog>
+                </div>
                 <Fade in={true}>
                     <div className="header">
                         <div className="icon">
@@ -100,12 +282,42 @@ function Restaurant(props) {
                             </div>
                         </div>
                         <div>
-                            <Chart
+                            {/* <Chart
                                 options={chart.options}
                                 series={chart.series}
                                 type="bar"
                                 width="300px"
+                            /> */}
+
+                            <Chart
+                                options={chart2.options}
+                                series={chart2.series}
+                                type="radar"
+                                width="500px"
+                                style={{ marginBottom: '-80px' }}
                             />
+                        </div>
+                        <div>
+                            <div
+                                style={{
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    height: '200px',
+                                    borderRadius: '25px',
+                                }}
+                            >
+                                <iframe
+                                    title="map"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.0006216761903!2d151.22543607615722!3d-33.91538357320884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12b18b2fcc1c79%3A0x8aac007d77d42ac9!2sGuzman%20y%20Gomez%20-%20UNSW!5e0!3m2!1sen!2sau!4v1709427362370!5m2!1sen!2sau"
+                                    width="100%"
+                                    height="600"
+                                    frameborder="0"
+                                    style={{
+                                        border: '0',
+                                        marginTop: '-150px',
+                                    }}
+                                ></iframe>
+                            </div>
                         </div>
                     </div>
                 </Fade>
@@ -152,7 +364,8 @@ function Restaurant(props) {
                                 }
                                 onClick={() => setAddReview(true)}
                                 height="20px"
-                                colour="salmon"
+                                width="80px"
+                                colour="lightblue"
                             />
                         </div>
                         <AddReview
@@ -170,7 +383,6 @@ function Restaurant(props) {
                                 padding: '24px',
                             }}
                         >
-                            {console.log(reviews?.length >= 1)}
                             {reviews?.length >= 1 &&
                                 reviews?.map((review, index) => (
                                     <Zoom
@@ -181,29 +393,66 @@ function Restaurant(props) {
                                         key={index}
                                     >
                                         <div
-                                            key={index}
                                             className="user-review"
+                                            key={index}
                                         >
                                             <div>
                                                 <div className="title">
                                                     {review?.reviewTitle}
                                                 </div>
-
                                                 <div className="contents">
                                                     <em>User:</em>{' '}
-                                                    <span>{review.name}</span>
-                                                    <em>
-                                                        Date of Review:
-                                                    </em>{' '}
-                                                    <span>{review.time}</span>
+                                                    <span>
+                                                        {review?.reviewer}
+                                                    </span>
+                                                    <em>Date of Review:</em>{' '}
+                                                    <span>
+                                                        {format(
+                                                            review?.date,
+                                                            'dd/MM/yyyy'
+                                                        )}
+                                                    </span>
                                                     <em>Review:</em>{' '}
                                                     <span>
-                                                        {review.description}
+                                                        {review.reviewText
+                                                            .length > 30 ? (
+                                                            <>
+                                                                {expandedReviews.includes(
+                                                                    index
+                                                                )
+                                                                    ? review.reviewText
+                                                                    : review.reviewText.slice(
+                                                                          0,
+                                                                          30
+                                                                      ) + '...'}
+                                                                <span
+                                                                    style={{
+                                                                        cursor: 'pointer',
+                                                                        color: 'black',
+                                                                        fontWeight:
+                                                                            'bold',
+                                                                    }}
+                                                                    onClick={() =>
+                                                                        toggleReview(
+                                                                            index
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {expandedReviews.includes(
+                                                                        index
+                                                                    )
+                                                                        ? 'Show less'
+                                                                        : 'Show more'}
+                                                                </span>
+                                                            </>
+                                                        ) : (
+                                                            review.reviewText
+                                                        )}
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            {/* <div>
+                                            <div>
                                                 <Chart
                                                     options={{
                                                         ...chart.options,
@@ -228,7 +477,7 @@ function Restaurant(props) {
                                                     width="200px"
                                                     height="110px"
                                                 />
-                                            </div> */}
+                                            </div>
                                             <div>
                                                 {review?.image && (
                                                     <>
@@ -237,10 +486,12 @@ function Restaurant(props) {
                                                             src={review.image}
                                                             alt="Uploaded review"
                                                             style={{
-                                                                width: '100px',
+                                                                width: '130px',
                                                                 height: '100px',
                                                                 marginBottom:
                                                                     '16px',
+                                                                objectFit:
+                                                                    'cover',
                                                             }}
                                                             onClick={() =>
                                                                 setOpenImage(

@@ -1,3 +1,24 @@
+body {
+    animation: fadeInAnimation ease-in 2s;
+    // animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.toolbar {
+    margin-bottom: 16px;
+    display: inline-flex;
+    gap: 16px;
+}
+
 .heading {
     font-size: 48px;
     font-weight: bold;
@@ -15,7 +36,7 @@
 .header {
     display: grid;
     align-items: center;
-    grid-template-columns: 20% [col-start] 40% [col-start] 30% [col-start];
+    grid-template-columns: 20% [col-start] 20% [col-start] 30% [col-start] 20% [col-start];
     gap: 32px;
     border-radius: 25px;
     padding: 24px;
@@ -59,7 +80,7 @@
     }
 
     .user-review {
-        max-height: 100px;
+        min-height: 100px;
         border-radius: 25px;
         padding: 32px;
         background: white;
@@ -80,7 +101,7 @@
             grid-template-columns: 40% 60%;
         }
         .image {
-            border-radius: 25px;
+            border-radius: 10px;
 
             transition: all 0.15s ease-in-out;
             &:hover {
