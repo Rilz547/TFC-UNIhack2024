@@ -147,19 +147,19 @@ const Details = (props) => {
                     Operating Hours
                     <div className="opening-hours">
                         <div>Monday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[0]}</div>
                         <div>Tuesday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[1]}</div>
                         <div>Wednesday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[2]}</div>
                         <div>Thursday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[3]}</div>
                         <div>Friday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[4]}</div>
                         <div>Saturday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[5]}</div>
                         <div>Sunday</div>
-                        <div>10am - 5pm</div>
+                        <div>{content?.operatingHours[6]}</div>
                     </div>
                 </DialogTitle>
                 <DialogContent>
