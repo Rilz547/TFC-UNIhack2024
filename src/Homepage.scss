@@ -57,11 +57,16 @@ h1 {
     z-index: 1;
 }
 
-#unsw-logo {
+#unsw-logo,
+#unidine-logo {
     height: 200px;
     width: auto;
     position: relative;
     z-index: 1;
+}
+
+#unidine-logo {
+    height: 300px;
 }
 
 .description {

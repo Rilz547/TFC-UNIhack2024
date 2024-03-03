@@ -3,17 +3,22 @@ import Zoom from '@mui/material/Zoom';
 import './Homepage.scss';
 import { restaurantsBackend } from './App.js';
 import unswLogo from './unsw-logo.png';
+<<<<<<< HEAD
 import Button from './components/Button';
 import { useState, useEffect } from 'react';
 import * as Ariakit from '@ariakit/react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+=======
+import uniDineLogo from './unidine-logo.png'
+>>>>>>> 5596b44374e1754e24349f3004592979dcd78cf9
 
 // async function fetchData() {
 //     const response = await fetch('http://localhost:32341/data');
 //     const data = await response.json();
 
+<<<<<<< HEAD
 //     return data?.dashboardView;
 // }
 
@@ -151,6 +156,41 @@ const Homepage = () => {
                 </h1>
 
                 <img id="unsw-logo" alt="UNSW Logo" src={unswLogo} />
+=======
+const Homepage = () => (
+    <div style={{ padding: '48px' }}>
+        <div className="homepage-title">
+            <img id="unidine-logo" alt="UniDine Logo" src={uniDineLogo} />
+            <h1 id="title-text">for </h1>
+            <img id="unsw-logo" alt="UNSW Logo" src={unswLogo} />
+        </div>
+        <div
+            className="bottom-container"
+            style={{ display: 'inline-flex', width: '100%', gap: '32px' }}
+        >
+            <div className="description">
+                <p>
+                    Welcome to UniDine UNSW, the ultimate guide to dining around
+                    the University of New South Wales! Our platform is designed
+                    for students, by students, to help you make the most of your
+                    culinary adventures. Whether you're looking for a cozy café
+                    to study in, a quick bite between classes, or a hidden gem
+                    for a special occasion, UNSW Eats has you covered.
+                </p>
+                <p>
+                    Join our community of food enthusiasts to discover and share
+                    your favorite dining spots. Upload your own reviews, photos,
+                    and recommendations to help your fellow students find the
+                    perfect meal. From trendy eateries to classic favorites,
+                    UNSW Eats is your go-to resource for all things food on
+                    campus.
+                </p>
+                <p>
+                    Join us in celebrating the vibrant food scene around UNSW.
+                    Let's eat, explore, and share the joy of good food together!
+                </p>
+                <p>- The UniDine UNSW Dev Team</p>
+>>>>>>> 5596b44374e1754e24349f3004592979dcd78cf9
             </div>
             <Toolbar />
             <Dialog
