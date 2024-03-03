@@ -279,7 +279,10 @@ function Restaurant(props) {
 
                             <Chart
                                 options={chart2.options}
-                                series={getReviewData(data?.reviews)}
+                                series={
+                                    getReviewData(data?.reviews) ||
+                                    chart2.series
+                                }
                                 type="radar"
                                 width="500px"
                                 style={{ marginBottom: '-80px' }}
