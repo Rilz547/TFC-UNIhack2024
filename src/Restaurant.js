@@ -264,7 +264,9 @@ function Restaurant(props) {
                                     marginTop: '12px',
                                 }}
                             >
-                                Mexican Cuisine
+                                {restObj?.cuisine}
+                                <p>{restObj?.description}</p>
+                                <p>{restObj?.location}</p>
                             </div>
                         </div>
                         <div>
@@ -277,7 +279,10 @@ function Restaurant(props) {
 
                             <Chart
                                 options={chart2.options}
-                                series={chart2.series}
+                                series={
+                                    getReviewData(data?.reviews) ||
+                                    chart2.series
+                                }
                                 type="radar"
                                 width="500px"
                                 style={{ marginBottom: '-80px' }}
@@ -292,17 +297,19 @@ function Restaurant(props) {
                                     borderRadius: '25px',
                                 }}
                             >
-                                <iframe
-                                    title="map"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.0006216761903!2d151.22543607615722!3d-33.91538357320884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12b18b2fcc1c79%3A0x8aac007d77d42ac9!2sGuzman%20y%20Gomez%20-%20UNSW!5e0!3m2!1sen!2sau!4v1709427362370!5m2!1sen!2sau"
-                                    width="100%"
-                                    height="600"
-                                    frameborder="0"
-                                    style={{
-                                        border: '0',
-                                        marginTop: '-150px',
-                                    }}
-                                ></iframe>
+                                {data?.id === 0 && (
+                                    <iframe
+                                        title="map"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.0006216761903!2d151.22543607615722!3d-33.91538357320884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12b18b2fcc1c79%3A0x8aac007d77d42ac9!2sGuzman%20y%20Gomez%20-%20UNSW!5e0!3m2!1sen!2sau!4v1709427362370!5m2!1sen!2sau"
+                                        width="100%"
+                                        height="600"
+                                        frameborder="0"
+                                        style={{
+                                            border: '0',
+                                            marginTop: '-150px',
+                                        }}
+                                    ></iframe>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -317,10 +324,12 @@ function Restaurant(props) {
                 >
                     <Fade in={true}>
                         <div style={{ width: '40%' }}>
-                            <Details content={restObj} />
-                            <div className="photos">
-                                <ResPhotos />
-                            </div>
+                            <Details content={restObj} id={data?.id} />
+                            {data?.id === 0 && (
+                                <div className="photos">
+                                    <ResPhotos />
+                                </div>
+                            )}
                         </div>
                     </Fade>
 
@@ -544,3 +553,36 @@ function Restaurant(props) {
 }
 
 export default Restaurant;
+
+function getReviewData(data) {
+    if (!data || data.length === 0) {
+        return [0, 0, 0]; // Return [0, 0, 0] if there are no reviews or data is not provided
+    }
+
+    let totalPrice = 0;
+    let totalQuality = 0;
+    let totalService = 0;
+
+    // Loop through each review and accumulate the values
+    data.forEach((review) => {
+        totalPrice += review.price;
+        totalQuality += review.quality;
+        totalService += review.service;
+    });
+
+    const totalReviews = data.length;
+
+    // Calculate averages
+    const avgPrice = totalPrice / totalReviews;
+    const avgQuality = totalQuality / totalReviews;
+    const avgService = totalService / totalReviews;
+
+    const retObect = [
+        {
+            name: 'Average Rating',
+            data: [avgPrice, avgQuality, avgService],
+        },
+    ];
+
+    return retObect;
+}

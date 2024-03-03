@@ -10,6 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import uniDineLogo from './unidine-logo.png';
+import Chart from 'react-apexcharts';
 
 // async function fetchData() {
 //     const response = await fetch('http://localhost:32341/data');
