@@ -3,13 +3,15 @@ import Zoom from '@mui/material/Zoom';
 import './Homepage.scss';
 import { restaurantsBackend } from './App.js';
 import unswLogo from './unsw-logo.png';
+import uniDineLogo from './unidine-logo.png'
 
 import { getData } from './backend/dataStore.ts';
 
 const Homepage = () => (
     <div style={{ padding: '48px' }}>
         <div className="homepage-title">
-            <h1 id="title-text">Food Reviews for </h1>
+            <img id="unidine-logo" alt="UniDine Logo" src={uniDineLogo} />
+            <h1 id="title-text">for </h1>
             <img id="unsw-logo" alt="UNSW Logo" src={unswLogo} />
         </div>
         <div
@@ -18,7 +20,7 @@ const Homepage = () => (
         >
             <div className="description">
                 <p>
-                    Welcome to UNSW Eats, the ultimate guide to dining around
+                    Welcome to UniDine UNSW, the ultimate guide to dining around
                     the University of New South Wales! Our platform is designed
                     for students, by students, to help you make the most of your
                     culinary adventures. Whether you're looking for a cozy café
@@ -37,7 +39,7 @@ const Homepage = () => (
                     Join us in celebrating the vibrant food scene around UNSW.
                     Let's eat, explore, and share the joy of good food together!
                 </p>
-                <p>- The UNSW Food Dev Team</p>
+                <p>- The UniDine UNSW Dev Team</p>
             </div>
             <div className="rest-container">
                 {getData().dashboardView.map((element, index) => {
