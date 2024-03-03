@@ -156,11 +156,10 @@ function Restaurant(props) {
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data.restaurants.find((e) => e.id === restObj.id));
-            });
+        }).then((response) => response.json());
+        // .then((data) => {
+        //     setData(data.restaurants.find((e) => e.id === restObj.id));
+        // });
         setReviews([...reviews, newReview]);
     };
 
@@ -395,7 +394,8 @@ function Restaurant(props) {
                                                     <em>Date of Review:</em>{' '}
                                                     <span>
                                                         {format(
-                                                            review?.date,
+                                                            review?.date ??
+                                                                Date.now(),
                                                             'dd/MM/yyyy'
                                                         )}
                                                     </span>
