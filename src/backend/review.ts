@@ -28,7 +28,7 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
             restaurant.reviews.push({
                 reviewTitle: reviewTitle,
                 reviewer: reviewer,
-                date: new Date(),
+                date: new Date().getTime(),
                 rating: rating,
                 likes: 0,
                 quality: quality,
@@ -36,6 +36,7 @@ export function reviewPost(reviewTitle: string, reviewer: string, rating: number
                 service: service,
                 reviewText: reviewText
             });
+            
             console.log(restaurant)    
         }
     }
